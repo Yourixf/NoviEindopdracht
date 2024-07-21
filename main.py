@@ -1,1 +1,6 @@
-print("Hello World")
+
+def printIets():
+    print("Hello World")
+
+
+printIets()
