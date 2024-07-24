@@ -1,3 +1,5 @@
+import api.api_calls as api_calls
+
 def print_hoofdmenu():
     """
     Dit is een functie die het hoofdmenu print in de terminal
@@ -23,10 +25,23 @@ def print_hoofdmenu():
     return print("".join(hoofd_menu))
 
 def hoofdmenu_optie_1():
+    """
+    Deze functie haalt de film titel vanuit de gebruiker op en roept de api call functie aan
+
+    Deze functie word aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
+    ge retourneerd word naar api_calls.zoek_film_naam
+    """
     gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
     if gebruiker_film_titel != None:
-        return print("functie aangeroepen.")
+        print("functie aangeroepen")
+
+
+        api_calls.zoek_film_naam(gebruiker_film_titel)
+
+    elif gebruiker_film_titel == None:
+        return print("Ja niet goed he")
+
 
 
 def start_applicatie():
