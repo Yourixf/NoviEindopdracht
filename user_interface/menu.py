@@ -1,5 +1,6 @@
 import api.api_calls as api_calls
 
+
 def print_hoofdmenu():
     """
     Dit is een functie die het hoofdmenu print in de terminal
@@ -24,23 +25,34 @@ def print_hoofdmenu():
 
     return print("".join(hoofd_menu))
 
-def hoofdmenu_optie_1():
+
+def hoofdmenu_optie_1(status_code=None, keuze_submenu=None):
     """
     Deze functie haalt de film titel vanuit de gebruiker op en roept de api call functie aan
 
     Deze functie word aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
     ge retourneerd word naar api_calls.zoek_film_naam
     """
-    gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
-    if gebruiker_film_titel != None:
-        print("functie aangeroepen")
+    while status_code != 200 and keuze_submenu != None:
+        gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
+
+        status_code = api_calls.zoek_film_naam(gebruiker_film_titel)
 
 
-        api_calls.zoek_film_naam(gebruiker_film_titel)
+def submenu_optie_1():
+    submenu_optie_lijst = [
+        "\nWat wil je nu doen?\n",
+        "1. Weergeef details van een film\n",
+        "2. Een andere film titel zoeken\n",
+        "3. Terug naar het hoofdmenu\n"
+    ]
 
-    elif gebruiker_film_titel == None:
-        return print("Ja niet goed he")
+    print("".join(submenu_optie_lijst))
+
+    keuze = input("Maak een keuze: ")
+
+    return keuze
 
 
 
@@ -69,5 +81,3 @@ def start_applicatie():
             print("Je hebt voor optie 5 gekozen.")
         else:
             print("Geen geldige keuze! Maak een keuze doormiddel van een cijfer zonder spaties.")
-
-
