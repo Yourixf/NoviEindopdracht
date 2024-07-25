@@ -48,7 +48,7 @@ def hoofdmenu_optie_1():
             api_calls.zoek_film_details(gebruiker_film_ID)
 
 
-def submenu_optie_1(geformateerde_data=None):
+def submenu_optie_1(resulaten_gekregen=None):
     """
     Deze functie laat het submenu van optie 1 zien.
 
@@ -68,7 +68,7 @@ def submenu_optie_1(geformateerde_data=None):
         "2. Een andere film titel zoeken\n"
     ]
 
-    if geformateerde_data == "geen resultaten":
+    if resulaten_gekregen is False:
         print("".join(submenu_optie_lijst_versie_2))
     else:
         print("".join(submenu_optie_lijst_versie_1))
@@ -76,6 +76,3 @@ def submenu_optie_1(geformateerde_data=None):
     keuze = input("Maak een keuze: ")
 
     return keuze
-
-
-

@@ -1,5 +1,5 @@
 import requests
-
+import config
 import user_interface.menu
 import api.api_error_handling as api_error_handling
 import api.api_data_handling as api_data_handling
@@ -59,16 +59,18 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
     response = requests.get(API_ENDPOINT_URL, params=payload, headers=headers)
 
-    #controleert wat de server response code is.
+    # Controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
 
-    print(f"Response code: {status_code[0]} - {status_code[1]}")
+    # Word geprint als logging variabele in main.py op True staat.
+    if config.terminal_logging:
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
-    #als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
+    # Als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
-        geformateerde_data = api_data_handling.formateer_film_lijst(response)
+        resulaten_gekregen = api_data_handling.formateer_film_lijst(response, gebruiker_film_titel)
 
-    keuze_submenu = user_interface.menu.submenu_optie_1(geformateerde_data)
+    keuze_submenu = user_interface.menu.submenu_optie_1(resulaten_gekregen)
 
     return keuze_submenu
 
@@ -95,8 +97,12 @@ def zoek_film_details(gebruiker_film_ID=None):
 
     # controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
-    print(f"Response code: {status_code[0]} - {status_code[1]}")
 
-    api_data_handling.formateer_film_details(response)
+    if status_code[0] == 200:
+        resulaten_gekregen = api_data_handling.formateer_film_details(response)
+
+    # Word geprint als logging variabele in main.py op True staat.
+    if config.terminal_logging:
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
     return response

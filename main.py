@@ -2,6 +2,7 @@ import user_interface.menu as menu
 import user_interface.user_error_handling as user_error_handling
 
 
+
 def start_applicatie():
     """
     Dit is de hoofdfunctie van de applicatie die het programma initialiseerd.
@@ -9,6 +10,9 @@ def start_applicatie():
     Deze ontvangt en verstuurd gegevens op basis van input.
     """
     stop_applicatie = False
+
+    #als je deze op True zet zie je de logging van mijn functies in de terminal terug, bijvoorbeeld server status code.
+    terminal_logging = False
 
     while not stop_applicatie:
         menu.print_hoofdmenu()
