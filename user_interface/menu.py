@@ -26,29 +26,52 @@ def print_hoofdmenu():
     return print("".join(hoofd_menu))
 
 
-def hoofdmenu_optie_1(status_code=None, keuze_submenu=None):
+def hoofdmenu_optie_1():
     """
     Deze functie haalt de film titel vanuit de gebruiker op en roept de api call functie aan
 
     Deze functie word aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
-    ge retourneerd word naar api_calls.zoek_film_naam
+    ge retourneerd word naar api_calls.zoek_film_naam daarvanuit komt er een submenu keuze terug, daarna word de gebruiker
+    deze functie naar de gewenste optie gestuurd.
     """
+    klaar_met_zoeken = False
 
-    while status_code != 200 and keuze_submenu != None:
+    while not klaar_met_zoeken:
         gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
-        status_code = api_calls.zoek_film_naam(gebruiker_film_titel)
+        keuze_submenu = api_calls.zoek_film_naam(gebruiker_film_titel)
+
+        klaar_met_zoeken = True if keuze_submenu == "1" else False
+
+        if keuze_submenu == "3":
+            gebruiker_film_ID = input("Wat is het ID van de film? (zie hierboven): ")
+            api_calls.zoek_film_details(gebruiker_film_ID)
 
 
-def submenu_optie_1():
-    submenu_optie_lijst = [
+def submenu_optie_1(geformateerde_data=None):
+    """
+    Deze functie laat het submenu van optie 1 zien.
+
+    Deze functie kijkt of de query resultaten bevat, indien wel wordt lijst versie 1 weergeven en andersom.
+    """
+
+    submenu_optie_lijst_versie_1 = [
         "\nWat wil je nu doen?\n",
-        "1. Weergeef details van een film\n",
+        "1. Terug naar het hoofdmenu\n",
         "2. Een andere film titel zoeken\n",
-        "3. Terug naar het hoofdmenu\n"
+        "3. Weergeef details van een film\n"
     ]
 
-    print("".join(submenu_optie_lijst))
+    submenu_optie_lijst_versie_2 = [
+        "\nWat wil je nu doen?\n",
+        "1. Terug naar het hoofdmenu\n",
+        "2. Een andere film titel zoeken\n"
+    ]
+
+    if geformateerde_data == "geen resultaten":
+        print("".join(submenu_optie_lijst_versie_2))
+    else:
+        print("".join(submenu_optie_lijst_versie_1))
 
     keuze = input("Maak een keuze: ")
 
@@ -56,28 +79,3 @@ def submenu_optie_1():
 
 
 
-def start_applicatie():
-    """
-    Dit is de hoofdfunctie van de applicatie die het programma initialiseerd.
-
-    Deze ontvangt en verstuurd gegevens op basis van input.
-    """
-    stop_applicatie = False
-
-    while not stop_applicatie:
-        print_hoofdmenu()
-        gebruiker_menu_keuze = input("Welke optie wil je kiezen?: ")
-
-        if gebruiker_menu_keuze == "5":
-            stop_applicatie = True
-        elif gebruiker_menu_keuze == "1":
-            print("Je hebt voor optie 1 gekozen.")
-            hoofdmenu_optie_1()
-        elif gebruiker_menu_keuze == "2":
-            print("Je hebt voor optie 2 gekozen.")
-        elif gebruiker_menu_keuze == "3":
-            print("Je hebt voor optie 3 gekozen.")
-        elif gebruiker_menu_keuze == "4":
-            print("Je hebt voor optie 5 gekozen.")
-        else:
-            print("Geen geldige keuze! Maak een keuze doormiddel van een cijfer zonder spaties.")

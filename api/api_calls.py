@@ -1,15 +1,15 @@
 import requests
-import json
 
 import user_interface.menu
-import user_interface.user_error_handling as user_error_handling
 import api.api_error_handling as api_error_handling
+import api.api_data_handling as api_data_handling
+
 
 def krijg_authorisatie():
     """
     Deze functie word voorziet andere API call functies van authorisatie.
 
-    Deze functie retourneert mijn persoonlijke API Key in de API_KEY_AUTHORISATIE
+    Deze functie retourneert mijn persoonlijke API Key in de API_KEY_AUTHORISATIE constante variabel
     aan de functie die een API endpoint aanroept zodat deze toegang krijgt.
     """
 
@@ -37,6 +37,7 @@ def test_api():
     for movie in response:
         print(movie[7])
 
+
 def zoek_film_naam(gebruiker_film_titel=None):
     """
     Deze functie maakt een API call en zoekt naar films
@@ -52,34 +53,50 @@ def zoek_film_naam(gebruiker_film_titel=None):
     }
 
     payload = {
-        "api_key" : f"{krijg_authorisatie()}",
-        "query" : f"{gebruiker_film_titel}"
+        "api_key": f"{krijg_authorisatie()}",
+        "query": f"{gebruiker_film_titel}"
     }
+
     response = requests.get(API_ENDPOINT_URL, params=payload, headers=headers)
 
+    #controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
 
     print(f"Response code: {status_code[0]} - {status_code[1]}")
 
+    #als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
-        response_dict = response.json()
-        formatted_json = json.dumps(response_dict, indent=1)
+        geformateerde_data = api_data_handling.formateer_film_lijst(response)
 
-        print(formatted_json)
+    keuze_submenu = user_interface.menu.submenu_optie_1(geformateerde_data)
 
-        for movie in response_dict["results"]:
-            title = movie["title"]
-            release_date = movie["release_date"]
-            overview = movie["overview"]
-            movie_id = movie["id"]
-
-            print(f"Titel: {title}")
-            print(f"Release Datum: {release_date}")
-            print(f"Overzicht: {overview}")
-            print(f"Film ID nummer: {movie_id}")
-            print("___")
+    return keuze_submenu
 
 
-    keuze_submenu = user_interface.menu.submenu_optie_1()
+def zoek_film_details(gebruiker_film_ID=None):
+    """
+    Deze functie maakt een API call en zoekt de details van een film
 
-    return status_code[0], keuze_submenu
+    Deze functie ontvangt een film id vanuit de gebruiker die in de payload van de query word gebruikt
+    om de data terug te krijgen die vervolgens geformateerd word.
+    """
+
+    API_ENDPOINT_URL = "https://api.themoviedb.org/3/movie/"
+
+    headers = {
+        "accept": "application/json",
+    }
+
+    payload = {
+        "api_key": f"{krijg_authorisatie()}"
+    }
+
+    response = requests.get(API_ENDPOINT_URL + gebruiker_film_ID, params=payload, headers=headers)
+
+    # controleert wat de server response code is.
+    status_code = api_error_handling.controleer_status_code(response)
+    print(f"Response code: {status_code[0]} - {status_code[1]}")
+
+    api_data_handling.formateer_film_details(response)
+
+    return response
