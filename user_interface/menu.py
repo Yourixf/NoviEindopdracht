@@ -36,7 +36,7 @@ def hoofdmenu_optie_1():
     """
     klaar_met_zoeken = False
 
-    while not klaar_met_zoeken:
+    while not klaar_met_zoeken: #TO DO FIX LOOP, 404 ERROR EN MELDING RESULTATEN GEKREGEN
         gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
         keuze_submenu = api_calls.zoek_film_naam(gebruiker_film_titel)
@@ -45,8 +45,9 @@ def hoofdmenu_optie_1():
 
         if keuze_submenu == "3":
             gebruiker_film_ID = input("Wat is het ID van de film? (zie hierboven): ")
-            api_calls.zoek_film_details(gebruiker_film_ID)
-
+            uitgevoerd = api_calls.zoek_film_details(gebruiker_film_ID)
+            if uitgevoerd == True:
+                submenu_optie_1(False)
 
 def submenu_optie_1(resulaten_gekregen=None):
     """

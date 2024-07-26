@@ -62,18 +62,19 @@ def zoek_film_naam(gebruiker_film_titel=None):
     # Controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
 
-    # Word geprint als logging variabele in main.py op True staat.
-    if config.terminal_logging:
-        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
-
     # Als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
         resulaten_gekregen = api_data_handling.formateer_film_lijst(response, gebruiker_film_titel)
-
+    else:
+        print(f"{status_code[0]} - {status_code[1]}")
+        resulaten_gekregen = False
     keuze_submenu = user_interface.menu.submenu_optie_1(resulaten_gekregen)
 
-    return keuze_submenu
+    # Word geprint als logging variabele in config.py op True staat.
+    if config.terminal_logging:
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
+    return keuze_submenu
 
 def zoek_film_details(gebruiker_film_ID=None):
     """
@@ -100,9 +101,12 @@ def zoek_film_details(gebruiker_film_ID=None):
 
     if status_code[0] == 200:
         resulaten_gekregen = api_data_handling.formateer_film_details(response)
+    else:
+        print(f"{status_code[0]} - {status_code[1]}")
+        resulaten_gekregen = False
 
     # Word geprint als logging variabele in main.py op True staat.
     if config.terminal_logging:
         print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
-    return response
+    return resulaten_gekregen

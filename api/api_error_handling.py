@@ -6,7 +6,10 @@ def controleer_status_code(response=None):
     of welke status code deze heeft en deze word met een bericht geretourneerd.
 
     """
-    if response.status_code == 200:
+
+    if response.status_code == None:
+        return 0, "De server geeft geen response"
+    elif response.status_code == 200:
         return 200, "Succesvol.\n"
     elif response.status_code == 400:
         return 400, "'Bad Request', de server snapt jouw verzoek niet. Probeer het opnieuw.\n"
