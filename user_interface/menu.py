@@ -35,19 +35,37 @@ def hoofdmenu_optie_1():
     deze functie naar de gewenste optie gestuurd.
     """
     klaar_met_zoeken = False
+    keuze_submenu = None
+    resulaten_gekregen = None
 
-    while not klaar_met_zoeken: #TO DO FIX LOOP, 404 ERROR EN MELDING RESULTATEN GEKREGEN
-        gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
-        keuze_submenu = api_calls.zoek_film_naam(gebruiker_film_titel)
+    while not klaar_met_zoeken: #TO DO FIX LOOP
+        if keuze_submenu == None or keuze_submenu == "2":
+            gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
 
-        klaar_met_zoeken = True if keuze_submenu == "1" else False
+            keuze_submenu, resulaten_gekregen = api_calls.zoek_film_naam(gebruiker_film_titel)
 
-        if keuze_submenu == "3":
-            gebruiker_film_ID = input("Wat is het ID van de film? (zie hierboven): ")
-            uitgevoerd = api_calls.zoek_film_details(gebruiker_film_ID)
-            if uitgevoerd == True:
-                submenu_optie_1(False)
+            klaar_met_zoeken = True if keuze_submenu == "1" else False
+
+        else:
+            if keuze_submenu == "1":
+                klaar_met_zoeken = True
+            elif keuze_submenu == "3":
+                gebruiker_film_ID = input("Wat is het ID van de film? (zie hierboven): ")
+                uitgevoerd = api_calls.zoek_film_details(gebruiker_film_ID)
+                if uitgevoerd == True:
+                    submenu_optie_1(False)
+
+
+
+
+
+
+
+
+
+
+
 
 def submenu_optie_1(resulaten_gekregen=None):
     """

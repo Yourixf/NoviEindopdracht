@@ -68,13 +68,14 @@ def zoek_film_naam(gebruiker_film_titel=None):
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
+
     keuze_submenu = user_interface.menu.submenu_optie_1(resulaten_gekregen)
 
     # Word geprint als logging variabele in config.py op True staat.
     if config.terminal_logging:
         print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
-    return keuze_submenu
+    return keuze_submenu, resulaten_gekregen
 
 def zoek_film_details(gebruiker_film_ID=None):
     """
