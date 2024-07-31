@@ -1,4 +1,5 @@
 import api.api_calls as api_calls
+import user_interface.menu as menu
 
 
 def print_hoofdmenu():
@@ -30,41 +31,29 @@ def hoofdmenu_optie_1():
     """
     Deze functie haalt de film titel vanuit de gebruiker op en roept de api call functie aan
 
-    Deze functie word aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
-    ge retourneerd word naar api_calls.zoek_film_naam daarvanuit komt er een submenu keuze terug, daarna word de gebruiker
-    deze functie naar de gewenste optie gestuurd.
+    Deze functie wordt aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
+    geretourneerd wordt naar api_calls.zoek_film_naam. Daar wordt de response geformateerd. Vervolgens
+    Word de submenu_optie_1 aangeroepen om een vervolg actie uit te voeren.
     """
     klaar_met_zoeken = False
     keuze_submenu = None
     resulaten_gekregen = None
 
-
-    while not klaar_met_zoeken: #TO DO FIX LOOP
-        if keuze_submenu == None or keuze_submenu == "2":
+    while not klaar_met_zoeken:
+        if resulaten_gekregen is None or keuze_submenu == "2":
             gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
+            resulaten_gekregen = api_calls.zoek_film_naam(gebruiker_film_titel)
 
-            keuze_submenu, resulaten_gekregen = api_calls.zoek_film_naam(gebruiker_film_titel)
+        keuze_submenu = menu.submenu_optie_1(resulaten_gekregen)
 
-            klaar_met_zoeken = True if keuze_submenu == "1" else False
-
-        else:
-            if keuze_submenu == "1":
-                klaar_met_zoeken = True
-            elif keuze_submenu == "3":
-                gebruiker_film_ID = input("Wat is het ID van de film? (zie hierboven): ")
-                uitgevoerd = api_calls.zoek_film_details(gebruiker_film_ID)
-                if uitgevoerd == True:
-                    submenu_optie_1(False)
-
-
-
-
-
-
-
-
-
-
+        if keuze_submenu == "1":
+            klaar_met_zoeken = True
+        elif keuze_submenu == "3" and resulaten_gekregen == True:
+            gebruiker_film_ID = input("Wat is het ID van de film? (zie lijst): ")
+            api_calls.zoek_film_details(gebruiker_film_ID)
+        elif keuze_submenu not in ["1", "2", "3"]:
+            print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
+            continue
 
 
 def submenu_optie_1(resulaten_gekregen=None):

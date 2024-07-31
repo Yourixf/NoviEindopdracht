@@ -1,6 +1,5 @@
 import requests
 import config
-import user_interface.menu
 import api.api_error_handling as api_error_handling
 import api.api_data_handling as api_data_handling
 
@@ -42,8 +41,9 @@ def zoek_film_naam(gebruiker_film_titel=None):
     """
     Deze functie maakt een API call en zoekt naar films
 
-    Deze functie ontvangt gebruikers input vanuit menu.hoofdmenu_optie_1 en
-    gebruikt deze in de payload om te zoeken
+    Deze functie ontvangt gebruikers input vanuit menu.hoofdmenu_optie_1 en gebruikt deze
+    in de payload om te zoeken en formateerd de response in api_data_handling.formateer_film_lijst.
+    Daana zal de functie een boolean, resultaten_gekregen retourneren.
     """
 
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/search/movie"
@@ -69,13 +69,12 @@ def zoek_film_naam(gebruiker_film_titel=None):
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
 
-    keuze_submenu = user_interface.menu.submenu_optie_1(resulaten_gekregen)
-
     # Word geprint als logging variabele in config.py op True staat.
     if config.terminal_logging:
         print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
-    return keuze_submenu, resulaten_gekregen
+    return resulaten_gekregen
+
 
 def zoek_film_details(gebruiker_film_ID=None):
     """
