@@ -90,7 +90,7 @@ def formateer_film_details(response=None):
     }
 
     print("-" * 50)
-    print("Alle beschikbare informatie over: FILM TITEL \n")
+    print("Alle beschikbare informatie over: FILM TITEL \n") # TO DO FIX
 
     # Itereer door response
     for key in film_details_volgorde_tuple:

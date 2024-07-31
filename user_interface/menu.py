@@ -84,3 +84,16 @@ def submenu_optie_1(resulaten_gekregen=None):
     keuze = input("Maak een keuze: ")
 
     return keuze
+
+
+def hoofdmenu_optie_2():
+
+
+    genre_optie_lijst = [
+        "\nBeschikbare genre's\n",
+        "1. Terug naar het hoofdmenu\n",
+        "2. Een andere film titel zoeken\n",
+        "3. Weergeef details van een film\n"
+    ]
+
+    api_calls.krijg_beschikbare_film_genres()
