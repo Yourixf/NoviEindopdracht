@@ -18,7 +18,7 @@ def krijg_authorisatie():
 
 def test_api():
     #url = "https://api.themoviedb.org/3/search/movie?api_key=73848e07266dcffa72c033c48439c581"
-    endpoint_url = "https://api.themoviedb.org/3/search/movie"
+    endpoint_url = "https://api.themoviedb.org/3/discover/movie"
 
     with_genres = f"Horror"
     url = endpoint_url
@@ -28,7 +28,8 @@ def test_api():
 
     payload = {
         "api_key": f"{krijg_authorisatie()}",
-        "with_genres": f"{with_genres}"
+
+        "with_genres": f"27"
     }
 
     response = requests.get(url, params=payload, headers=headers)
@@ -61,6 +62,8 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
     # Controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
+
+    resulaten_gekregen = None
 
     # Als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
@@ -99,6 +102,8 @@ def zoek_film_details(gebruiker_film_ID=None):
     # controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
 
+    resulaten_gekregen = None
+
     if status_code[0] == 200:
         resulaten_gekregen = api_data_handling.formateer_film_details(response)
     else:
@@ -112,7 +117,7 @@ def zoek_film_details(gebruiker_film_ID=None):
     return resulaten_gekregen
 
 
-def krijg_beschikbare_film_genres():
+def krijg_beschikbare_film_genres():  #overbodig momenteel
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/genre/movie/list"
 
     genre_taal = "nl"
@@ -149,3 +154,42 @@ def krijg_beschikbare_film_genres():
     # make data handling function
 
 
+def zoek_acteur_naam(gebruiker_acteur_naam=None):
+    """
+    Deze functie zoekt een naam van een actuer.
+
+    Deze functie wordt anageroepen vanuit menu.py en krijgt daarvanuit een acteur naam
+    waarmee deze een api call maakt, de status daarvan controleerd, de data formateerd en laat zien
+    en zal er een boolean vanuit de formateer functie worden geretourneerd aan de aanroepende functie
+    """
+    API_ENDPOINT_URL = "https://api.themoviedb.org/3/search/person"
+
+    headers = {
+        "accept": "application/json",
+    }
+
+    payload = {
+        "api_key": f"{krijg_authorisatie()}",
+        "query": f"{gebruiker_acteur_naam}"
+    }
+
+    response = requests.get(API_ENDPOINT_URL, params=payload, headers=headers)
+
+    # Controleert wat de server response code is.
+    status_code = api_error_handling.controleer_status_code(response)
+
+    # Als server response code 200 is zal de data worden geformateerd in formateer_acteur_lijst
+    resulaten_gekregen = None
+
+    if status_code[0] == 200:
+
+        resulaten_gekregen = api_data_handling.formateer_acteur_lijst(response, gebruiker_acteur_naam)
+    else:
+        print(f"{status_code[0]} - {status_code[1]}")
+        resulaten_gekregen = False
+
+    # Word geprint als logging variabele in config.py op True staat.
+    if config.terminal_logging:
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+
+    return resulaten_gekregen

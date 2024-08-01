@@ -26,6 +26,10 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 
     if response_dict.get("total_results", 0) == 0:
         print(f"Geen resultaten voor: {gebruiker_film_titel}")
+
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Geen film lijst weergegeven")
         return False
     else:
         print("-" * 50)
@@ -45,7 +49,7 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Resultaten weergegeven")
+            print("Logging - Film lijst weergegeven")
 
         return True
 
@@ -53,6 +57,10 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 def formateer_film_details(response=None):
     """
     Deze functie formateert de film details response.
+
+    Deze functie krijgt een API response van een film detail call, dan al deze
+    functie over de data itereren, vervolgens formateren en presenteren aan de gebruiker.
+    Tot slot zal deze een boolean waarde retourneren aan de aanroepende functie.
     """
 
     response_dict = response.json()
@@ -121,4 +129,72 @@ def formateer_film_details(response=None):
 
             print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
 
-    return True
+            # Word geprint als logging variabele in main.py op True staat.
+            if config.terminal_logging:
+                print("Logging - Film details weergegeven")
+
+            return True
+        elif key not in response_dict:
+            print("Geen details gevonden.")
+
+            # Word geprint als logging variabele in main.py op True staat.
+            if config.terminal_logging:
+                print("Logging - Geen film details weergegeven")
+
+            return False
+
+
+def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
+    """
+    Deze functie formateert de actuer response lijst.
+
+    Deze functie wordt aangeroepen vanuit api_calls.zoek_acteur_naam() die een response meegeeft
+    die vervolgens gecontroleerd wordt op inhoud en formateerd en presenteerd aan de gebruikt.
+    Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
+
+    """
+    response_dict = response.json()
+
+    if response_dict.get("total_results", 0) == 0:
+        print(f"Geen resultaten voor: {gebruiker_acteur_naam}")
+
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Geen acteur lijst weergegeven")
+
+        return False
+    else:
+        print("-" * 50)
+        for movie in response_dict.get("results", []):
+            # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
+            # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
+            name = formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
+            original_name = formateer_maximale_grootte(movie.get("original_name", "").strip() or "ONBEKEND")
+            gender = formateer_maximale_grootte(str(movie.get("gender", "")).strip() or "ONBEKEND")
+            known_for_department = formateer_maximale_grootte(movie.get("known_for_department").strip() or "ONBEKEND")
+            popularity = formateer_maximale_grootte(str(movie.get("popularity", "")).strip() or "ONBEKEND")
+            known_for_list = formateer_maximale_grootte(movie.get("known_for", []))
+            known_for_movie = formateer_maximale_grootte(str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
+            actor_id = formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
+
+            if gender == "1":
+                gender = "Vrouw"
+            elif gender == "2":
+                gender = "Man"
+            elif gender == "3":
+                gender = "Non binair"
+
+            print(f"Naam: {name}")
+            print(f"Oorspronkelijke naam: {original_name}")
+            print(f"Geslacht: {gender}")
+            print(f"Bekend voor: {known_for_department}")
+            print(f"Populariteit score: {popularity}")
+            print(f"Bekend van de titel: {known_for_movie}")
+            print(f"Acteur ID nummer: {actor_id}")
+            print("-" * 50)
+
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Acteur lijst weergegeven")
+
+        return True

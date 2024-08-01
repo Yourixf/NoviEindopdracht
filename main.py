@@ -3,7 +3,6 @@ import user_interface.menu as menu
 import user_interface.user_error_handling as user_error_handling
 
 
-
 def start_applicatie():
     """
     Dit is de hoofdfunctie van de applicatie die het programma initialiseerd.
@@ -19,7 +18,7 @@ def start_applicatie():
         menu.print_hoofdmenu()
         gebruiker_menu_keuze = input("Welke optie wil je kiezen?: ")
 
-        if gebruiker_menu_keuze == "5":
+        if gebruiker_menu_keuze == "4":
             stop_applicatie = True
         elif gebruiker_menu_keuze == "1":
             print("Je hebt voor optie 1 gekozen.")
@@ -29,8 +28,6 @@ def start_applicatie():
             menu.hoofdmenu_optie_2()
         elif gebruiker_menu_keuze == "3":
             print("Je hebt voor optie 3 gekozen.")
-        elif gebruiker_menu_keuze == "4":
-            print("Je hebt voor optie 4 gekozen.")
         elif gebruiker_menu_keuze == "20":
             api.api_calls.test_api()
         else:

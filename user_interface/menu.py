@@ -10,10 +10,9 @@ def print_hoofdmenu():
 
     hoofd_opties_lijst = [
         "1. Zoek een film op basis van een titel\n",
-        "2. Zoek films op basis van een genre\n",
-        "3. Zoek een acteur op basis van een naam\n",
-        "4. Zoek een film door middel van een acteur\n"
-        "5. Stop applicatie\n"
+        "2. Zoek acteur op basis van een naam\n",
+        "3. Zoek een film door middel van een acteur\n"
+        "4. Stop applicatie\n"
     ]
 
     hoofd_menu = [
@@ -87,13 +86,53 @@ def submenu_optie_1(resulaten_gekregen=None):
 
 
 def hoofdmenu_optie_2():
+    klaar_met_zoeken = False
+    keuze_submenu = None
+    resulaten_gekregen = None
+
+    while not klaar_met_zoeken:
+        if resulaten_gekregen is None or keuze_submenu == "2":
+            gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
+            resulaten_gekregen = api_calls.zoek_acteur_naam(gebruiker_acteur_naam)
+
+        keuze_submenu = menu.submenu_optie_2(resulaten_gekregen)
+
+        if keuze_submenu == "1":
+            klaar_met_zoeken = True
+        elif keuze_submenu == "3" and resulaten_gekregen == True:
+            gebruiker_film_ID = input("Wat is het ID van de acteur? (zie lijst): ")
+            print("film detials oke dan ofzx")
+            #api_calls.zoek_film_details(gebruiker_film_ID)
+        elif keuze_submenu not in ["1", "2", "3"]:
+            print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
+            continue
 
 
-    genre_optie_lijst = [
-        "\nBeschikbare genre's\n",
+def submenu_optie_2(resulaten_gekregen=None):
+    """
+    Deze functie laat het submenu van optie 1 zien.
+
+    Deze functie kijkt of de query resultaten bevat, indien wel wordt lijst versie 1 weergeven en andersom.
+    """
+
+    submenu_optie_lijst_versie_1 = [
+        "\nWat wil je nu doen?\n",
         "1. Terug naar het hoofdmenu\n",
-        "2. Een andere film titel zoeken\n",
-        "3. Weergeef details van een film\n"
+        "2. Een andere film acteur zoeken\n",
+        "3. Weergeef details van een acteur\n"
     ]
 
-    api_calls.krijg_beschikbare_film_genres()
+    submenu_optie_lijst_versie_2 = [
+        "\nWat wil je nu doen?\n",
+        "1. Terug naar het hoofdmenu\n",
+        "2. Een andere acteur naam zoeken\n"
+    ]
+
+    if resulaten_gekregen is False:
+        print("".join(submenu_optie_lijst_versie_2))
+    else:
+        print("".join(submenu_optie_lijst_versie_1))
+
+    keuze = input("Maak een keuze: ")
+
+    return keuze
