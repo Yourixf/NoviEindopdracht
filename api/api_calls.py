@@ -28,7 +28,6 @@ def test_api():
 
     payload = {
         "api_key": f"{krijg_authorisatie()}",
-
         "with_genres": f"27"
     }
 
@@ -62,8 +61,6 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
     # Controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
-
-    resulaten_gekregen = None
 
     # Als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
@@ -101,8 +98,6 @@ def zoek_film_details(gebruiker_film_ID=None):
 
     # controleert wat de server response code is.
     status_code = api_error_handling.controleer_status_code(response)
-
-    resulaten_gekregen = None
 
     if status_code[0] == 200:
         resulaten_gekregen = api_data_handling.formateer_film_details(response)
@@ -179,10 +174,8 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
     status_code = api_error_handling.controleer_status_code(response)
 
     # Als server response code 200 is zal de data worden geformateerd in formateer_acteur_lijst
-    resulaten_gekregen = None
 
     if status_code[0] == 200:
-
         resulaten_gekregen = api_data_handling.formateer_acteur_lijst(response, gebruiker_acteur_naam)
     else:
         print(f"{status_code[0]} - {status_code[1]}")

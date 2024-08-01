@@ -21,4 +21,5 @@ def controleer_status_code(response=None):
         return 404, "'Not Found', de server heeft jouw verzoek niet kunnen vinden op de server.\n"
     elif response.status_code == 429:
         return 429, "'Rate limit exceeded', je bent over je toegestaande hoeveelheid verzoeken heen.\n"
-
+    else:
+        return 000, "Er ging iets fout, maar wat weet ik niet..."
