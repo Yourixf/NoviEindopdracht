@@ -1,5 +1,6 @@
-import api.api_calls as api_calls
 import user_interface.menu as menu
+import api.api_calls.api_calls_actor as api_calls_actor
+import api.api_calls.api_calls_movie as api_calls_movie
 
 
 def print_hoofdmenu():
@@ -41,7 +42,7 @@ def hoofdmenu_optie_1():
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu == "2":
             gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
-            resulaten_gekregen = api_calls.zoek_film_naam(gebruiker_film_titel)
+            resulaten_gekregen = api_calls_movie.zoek_film_naam(gebruiker_film_titel)
 
         keuze_submenu = menu.submenu_optie_1(resulaten_gekregen)
 
@@ -49,7 +50,7 @@ def hoofdmenu_optie_1():
             klaar_met_zoeken = True
         elif keuze_submenu == "3" and resulaten_gekregen == True:
             gebruiker_film_ID = input("Wat is het ID van de film? (zie lijst): ")
-            api_calls.zoek_film_details(gebruiker_film_ID)
+            api_calls_movie.zoek_film_details(gebruiker_film_ID)
         elif keuze_submenu not in ["1", "2", "3"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue
@@ -93,7 +94,7 @@ def hoofdmenu_optie_2():
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu == "2":
             gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
-            resulaten_gekregen = api_calls.zoek_acteur_naam(gebruiker_acteur_naam)
+            resulaten_gekregen = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
 
         keuze_submenu = menu.submenu_optie_2(resulaten_gekregen)
 

@@ -1,18 +1,5 @@
-import textwrap
 import config
-
-
-def formateer_maximale_grootte(value=None, max_length=50):
-    """
-    Deze functie zorgt ervoor dat de text grootte gemaximaliseerd is.
-
-    Deze functie word aangeroepen vanuit andere functie die iets printen, en geven de
-    print waarde me en een max lengte, indien geen lente word geleverd is deze standaard 50
-    en de waarde word geformateerd en geretouneerd.
-    """
-    if isinstance(value, str) and len(value) > max_length:
-        return '\n'.join(textwrap.wrap(value, width=max_length))
-    return value
+import api.api_data_handling.api_data_handling_general as api_data_handling_general
 
 
 def formateer_film_lijst(response=None, gebruiker_film_titel=None):
@@ -36,10 +23,10 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
         for movie in response_dict.get("results", []):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
-            title = formateer_maximale_grootte(movie.get("title", "").strip() or "ONBEKEND")
-            release_date = formateer_maximale_grootte(movie.get("release_date", "").strip() or "ONBEKEND")
-            overview = formateer_maximale_grootte(movie.get("overview", "").strip() or "ONBEKEND")
-            movie_id = formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
+            title = api_data_handling_general.formateer_maximale_grootte(movie.get("title", "").strip() or "ONBEKEND")
+            release_date = api_data_handling_general.formateer_maximale_grootte(movie.get("release_date", "").strip() or "ONBEKEND")
+            overview = api_data_handling_general.formateer_maximale_grootte(movie.get("overview", "").strip() or "ONBEKEND")
+            movie_id = api_data_handling_general.formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
 
             print(f"Titel: {title}")
             print(f"Release Datum: {release_date}")
@@ -98,7 +85,7 @@ def formateer_film_details(response=None):
     }
 
     print("-" * 50)
-    print("Alle beschikbare informatie over: FILM TITEL \n") # TO DO FIX
+    print("Alle beschikbare informatie over: FILM TITEL \n")  # TO DO FIX
 
     # Itereer door response
     for key in film_details_volgorde_tuple:
@@ -142,59 +129,3 @@ def formateer_film_details(response=None):
                 print("Logging - Geen film details weergegeven")
 
             return False
-
-
-def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
-    """
-    Deze functie formateert de actuer response lijst.
-
-    Deze functie wordt aangeroepen vanuit api_calls.zoek_acteur_naam() die een response meegeeft
-    die vervolgens gecontroleerd wordt op inhoud en formateerd en presenteerd aan de gebruikt.
-    Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
-
-    """
-    response_dict = response.json()
-
-    if response_dict.get("total_results", 0) == 0:
-        print(f"Geen resultaten voor: {gebruiker_acteur_naam}")
-
-        # Word geprint als logging variabele in main.py op True staat.
-        if config.terminal_logging:
-            print("Logging - Geen acteur lijst weergegeven")
-
-        return False
-    else:
-        print("-" * 50)
-        for movie in response_dict.get("results", []):
-            # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
-            # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
-            name = formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
-            original_name = formateer_maximale_grootte(movie.get("original_name", "").strip() or "ONBEKEND")
-            gender = formateer_maximale_grootte(str(movie.get("gender", "")).strip() or "ONBEKEND")
-            known_for_department = formateer_maximale_grootte(movie.get("known_for_department").strip() or "ONBEKEND")
-            popularity = formateer_maximale_grootte(str(movie.get("popularity", "")).strip() or "ONBEKEND")
-            known_for_list = formateer_maximale_grootte(movie.get("known_for", []))
-            known_for_movie = formateer_maximale_grootte(str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
-            actor_id = formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
-
-            if gender == "1":
-                gender = "Vrouw"
-            elif gender == "2":
-                gender = "Man"
-            elif gender == "3":
-                gender = "Non binair"
-
-            print(f"Naam: {name}")
-            print(f"Oorspronkelijke naam: {original_name}")
-            print(f"Geslacht: {gender}")
-            print(f"Bekend voor: {known_for_department}")
-            print(f"Populariteit score: {popularity}")
-            print(f"Bekend van de titel: {known_for_movie}")
-            print(f"Acteur ID nummer: {actor_id}")
-            print("-" * 50)
-
-        # Word geprint als logging variabele in main.py op True staat.
-        if config.terminal_logging:
-            print("Logging - Acteur lijst weergegeven")
-
-        return True

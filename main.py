@@ -1,6 +1,5 @@
 import api.api_calls
 import user_interface.menu as menu
-import user_interface.user_error_handling as user_error_handling
 
 
 def start_applicatie():
@@ -29,7 +28,7 @@ def start_applicatie():
         elif gebruiker_menu_keuze == "3":
             print("Je hebt voor optie 3 gekozen.")
         elif gebruiker_menu_keuze == "20":
-            api.api_calls.test_api()
+            api.api_calls.api_calls_general.test_api()
         else:
             print("Geen geldige keuze! Maak een keuze doormiddel van een cijfer zonder spaties.")
 
