@@ -1,7 +1,8 @@
 import requests
 import config
 import api.api_error_handling as api_error_handling
-import api.api_data_handling.api_data_handling_general as api_data_handling
+import api.api_data_handling.api_data_handling_general as api_data_handling_general
+import api.api_data_handling.api_data_handling_movie as api_data_handling_movie
 
 def zoek_film_naam(gebruiker_film_titel=None):
     """
@@ -30,7 +31,7 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
     # Als server response code 200 is zal de data worden geformateerd in formateer_film_lijst
     if status_code[0] == 200:
-        resulaten_gekregen = api_data_handling.formateer_film_lijst(response, gebruiker_film_titel)
+        resulaten_gekregen =  api_data_handling_movie.formateer_film_lijst(response, gebruiker_film_titel)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
@@ -66,7 +67,7 @@ def zoek_film_details(gebruiker_film_ID=None):
     status_code = api_error_handling.controleer_status_code(response)
 
     if status_code[0] == 200:
-        resulaten_gekregen = api_data_handling.formateer_film_details(response)
+        resulaten_gekregen = api_data_handling_movie.formateer_film_details(response)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False

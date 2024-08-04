@@ -112,20 +112,22 @@ def formateer_film_details(response=None):
                 value = "ONBEKEND"
 
             # Zorgt ervoor dat de geprinte waardes niet breder is dan 50 characters.
-            geformateerde_value = formateer_maximale_grootte(value, max_length=50)
+            geformateerde_value = api_data_handling_general.formateer_maximale_grootte(value, max_length=50)
 
             print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
 
-            # Word geprint als logging variabele in main.py op True staat.
-            if config.terminal_logging:
-                print("Logging - Film details weergegeven")
 
-            return True
+
         elif key not in response_dict:
             print("Geen details gevonden.")
 
-            # Word geprint als logging variabele in main.py op True staat.
-            if config.terminal_logging:
-                print("Logging - Geen film details weergegeven")
-
-            return False
+    if key not in response_dict:
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Geen film details weergegeven")
+        return False
+    elif key in response_dict:
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Film details weergegeven")
+        return True

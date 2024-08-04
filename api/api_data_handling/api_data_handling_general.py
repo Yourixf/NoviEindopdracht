@@ -1,5 +1,4 @@
 import textwrap
-import config
 
 
 def formateer_maximale_grootte(value=None, max_length=50):
