@@ -116,8 +116,6 @@ def formateer_film_details(response=None):
 
             print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
 
-
-
         elif key not in response_dict:
             print("Geen details gevonden.")
 
@@ -131,3 +129,5 @@ def formateer_film_details(response=None):
         if config.terminal_logging:
             print("Logging - Film details weergegeven")
         return True
+
+

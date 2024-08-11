@@ -1,7 +1,9 @@
 import requests
 import config
 import api.api_error_handling as api_error_handling
-import api.api_data_handling.api_data_handling_general as api_data_handling
+import api.api_data_handling.api_data_handling_general as api_data_handling_general
+import api.api_data_handling.api_data_handling_actor as api_data_handling_actor
+
 
 def zoek_acteur_naam(gebruiker_acteur_naam=None):
     """
@@ -30,7 +32,7 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
     # Als server response code 200 is zal de data worden geformateerd in formateer_acteur_lijst
 
     if status_code[0] == 200:
-        resulaten_gekregen = api_data_handling.formateer_acteur_lijst(response, gebruiker_acteur_naam)
+        resulaten_gekregen = api_data_handling_actor.formateer_acteur_lijst(response, gebruiker_acteur_naam)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
