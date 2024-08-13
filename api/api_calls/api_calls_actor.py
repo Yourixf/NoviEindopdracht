@@ -44,5 +44,33 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
     return resulaten_gekregen
 
 
-def zoek_actuer_details():
-    pass
+def zoek_acteur_details(gebruiker_acteur_id=None):
+    """
+
+    """
+    API_ENDPOINT_URL = "https://api.themoviedb.org/3/person/"
+
+    headers = {
+        "accept": "application/json",
+    }
+
+    payload = {
+        "api_key": f"{config.krijg_authorisatie()}"
+    }
+
+    response = requests.get(API_ENDPOINT_URL + gebruiker_acteur_id, params=payload, headers=headers)
+
+    # controleert wat de server response code is.
+    status_code = api_error_handling.controleer_status_code(response)
+
+    if status_code[0] == 200:
+        resulaten_gekregen = api_data_handling_actor.formateer_acteur_details(response)
+    else:
+        print(f"{status_code[0]} - {status_code[1]}")
+        resulaten_gekregen = False
+
+    # Word geprint als logging variabele in main.py op True staat.
+    if config.terminal_logging:
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+
+    return resulaten_gekregen

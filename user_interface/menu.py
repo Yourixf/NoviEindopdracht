@@ -148,7 +148,7 @@ def hoofdmenu_optie_3():
     resulaten_gekregen = None
 
     while not klaar_met_zoeken:
-        if resulaten_gekregen is None or keuze_submenu == "2":
+        if resulaten_gekregen is None or keuze_submenu in ["2", "4"]:
             gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
             resulaten_gekregen = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
 
@@ -161,11 +161,8 @@ def hoofdmenu_optie_3():
         if keuze_submenu == "1":
             klaar_met_zoeken = True
         elif keuze_submenu == "3" and resulaten_gekregen == True:
-            gebruiker_acteur_ID = input("Wat is het ID van de acteur waarmee je wilt zoeken?: ")
-            api_calls_actor.zoek_actuer_details(gebruiker_acteur_ID)
-        elif keuze_submenu == "4" and resulaten_gekregen == True:
-            #TO DO OPTION 4
-            pass
+            gebruiker_acteur_ID = input("Wat is het ID van de acteur waarvan je de details wilt zoeken?: ")
+            api_calls_actor.zoek_acteur_details(gebruiker_acteur_ID)
         elif keuze_submenu not in ["1", "2", "3", "4"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue

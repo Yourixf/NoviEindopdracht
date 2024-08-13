@@ -55,3 +55,90 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
             print("Logging - Acteur lijst weergegeven")
 
         return True
+
+def formateer_acteur_details(response=None):
+
+
+    response_dict = response.json()
+
+
+    film_details_volgorde_tuple = (
+        "name",
+        "gender",
+        "birthday",
+        "deathday",
+        "place_of_birth",
+        "adult",
+        "also_known_as",
+        "known_for_department",
+        "popularity",
+        "biography",
+        "id"
+    )
+
+
+
+    # key_map_dict = {
+    #     "also_known_as": "Bekend als",
+    #     "known_for_department": "Bekend voor",
+    #     "popularity": "Populariteit"
+    #
+
+    key_map_dict = {
+        "adult": "Voor volwassenen",
+        "also_known_as": "Bekend als",
+        "id": "ID",
+        "biography": "Biographie",
+        "birthday": "Geboortedatum",
+        "deathday": "Sterfdag",
+        "gender": "Geslacht",
+        "known_for_department": "Bekend voor",
+        "name": "Naam",
+        "place_of_birth": "Geboorteplaats",
+        "popularity": "Populariteit"
+    }
+
+    print("-" * 50)
+    print("Alle beschikbare informatie over: FILM TITEL \n")  # TO DO FIX
+
+    for key in film_details_volgorde_tuple:
+        # Controleert of item in response zit
+        if key in response_dict:
+            value = response_dict[key]
+            # controlleert of de waarde een bool is
+            if isinstance(value, bool):
+                # Als waarde True is: Ja, als waarde False is: Nee.
+                value = "Ja" if value else "Nee"
+            elif isinstance(value, list):
+                # Al de respone een sub dict een key name bevat, zal deze erop itereren
+                # en de values in 1 string plaatsen
+                if all(isinstance(item, dict) and 'name' in item for item in value):
+                    value = ", ".join(item['name'] for item in value)
+                else:
+                    value = ", ".join(str(item) for item in value)
+            elif isinstance(value, (int, float)):
+                value = str(value)
+            else:
+                value = value.strip() if isinstance(value, str) else value
+
+            if not value:
+                value = "ONBEKEND"
+
+            # Zorgt ervoor dat de geprinte waardes niet breder is dan 50 characters.
+            geformateerde_value = api_data_handling_general.formateer_maximale_grootte(value, max_length=50)
+
+            print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
+
+        elif key not in response_dict:
+            print("Geen details gevonden.")
+
+    if key not in response_dict:
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Geen film details weergegeven")
+        return False
+    elif key in response_dict:
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Film details weergegeven")
+        return True
