@@ -76,14 +76,6 @@ def formateer_acteur_details(response=None):
         "id"
     )
 
-
-
-    # key_map_dict = {
-    #     "also_known_as": "Bekend als",
-    #     "known_for_department": "Bekend voor",
-    #     "popularity": "Populariteit"
-    #
-
     key_map_dict = {
         "adult": "Voor volwassenen",
         "also_known_as": "Bekend als",
@@ -135,10 +127,10 @@ def formateer_acteur_details(response=None):
     if key not in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen film details weergegeven")
+            print("Logging - Geen acteur details weergegeven")
         return False
     elif key in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Film details weergegeven")
+            print("Logging - Acteur details weergegeven")
         return True
