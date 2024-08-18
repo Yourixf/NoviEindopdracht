@@ -1,6 +1,7 @@
 import config
 import api.api_data_handling.api_data_handling_general as api_data_handling_general
 
+
 def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
     """
     Deze functie formateert de actuer response lijst.
@@ -26,13 +27,19 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
             name = api_data_handling_general.formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
-            original_name = api_data_handling_general.formateer_maximale_grootte(movie.get("original_name", "").strip() or "ONBEKEND")
-            gender = api_data_handling_general.formateer_maximale_grootte(str(movie.get("gender", "")).strip() or "ONBEKEND")
-            known_for_department = api_data_handling_general.formateer_maximale_grootte(movie.get("known_for_department").strip() or "ONBEKEND")
-            popularity = api_data_handling_general.formateer_maximale_grootte(str(movie.get("popularity", "")).strip() or "ONBEKEND")
+            original_name = api_data_handling_general.formateer_maximale_grootte(
+                movie.get("original_name", "").strip() or "ONBEKEND")
+            gender = api_data_handling_general.formateer_maximale_grootte(
+                str(movie.get("gender", "")).strip() or "ONBEKEND")
+            known_for_department = api_data_handling_general.formateer_maximale_grootte(
+                movie.get("known_for_department").strip() or "ONBEKEND")
+            popularity = api_data_handling_general.formateer_maximale_grootte(
+                str(movie.get("popularity", "")).strip() or "ONBEKEND")
             known_for_list = api_data_handling_general.formateer_maximale_grootte(movie.get("known_for", []))
-            known_for_movie = api_data_handling_general.formateer_maximale_grootte(str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
-            actor_id = api_data_handling_general.formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
+            known_for_movie = api_data_handling_general.formateer_maximale_grootte(
+                str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
+            actor_id = api_data_handling_general.formateer_maximale_grootte(
+                str(movie.get("id", "")).strip() or "ONBEKEND")
 
             if gender == "1":
                 gender = "Vrouw"
@@ -56,11 +63,9 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
         return True
 
+
 def formateer_acteur_details(response=None):
-
-
     response_dict = response.json()
-
 
     film_details_volgorde_tuple = (
         "name",

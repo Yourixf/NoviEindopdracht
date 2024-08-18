@@ -87,6 +87,16 @@ def submenu_optie_1(resulaten_gekregen=None):
 
 
 def hoofdmenu_optie_2():
+    """
+    Deze functie haalt een acteur naam en acteur ID vanuit de gebruiker op en roept de api call functie aan en
+    retourneert de response.
+
+    Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
+    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een api call,
+    de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee wordt de details
+    van een acteur gelaten zien.
+    """
+
     klaar_met_zoeken = False
     keuze_submenu = None
     resulaten_gekregen = None
@@ -141,8 +151,15 @@ def submenu_optie_2(resulaten_gekregen=None):
 
 def hoofdmenu_optie_3():
     """
+    Deze functie haalt een acteur naam en acteur ID vanuit de gebruiker op en roept de api call functie aan en
+    retourneert de response.
 
+    Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
+    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een api call,
+    de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee wordt een film lijst
+    geretourneerd waar de actuer ID instaat. Hierna krijgt de gebruiker de opties om de bovenstaande functies te gebruiken.
     """
+
     klaar_met_zoeken = False
     keuze_submenu = None
     resulaten_gekregen = None
