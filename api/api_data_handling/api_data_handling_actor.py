@@ -14,7 +14,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
     response_dict = response.json()
 
     if response_dict.get("total_results", 0) == 0:
-        print(f"Geen resultaten voor: {gebruiker_acteur_naam}")
+        print(f"Geen resultaten voor: {gebruiker_acteur_naam}\n")
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
@@ -64,7 +64,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
         return True
 
 
-def formateer_acteur_details(response=None):
+def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
     response_dict = response.json()
 
     film_details_volgorde_tuple = (
@@ -96,7 +96,7 @@ def formateer_acteur_details(response=None):
     }
 
     print("-" * 50)
-    print("Alle beschikbare informatie over: FILM TITEL \n")  # TO DO FIX
+    print(f"Alle beschikbare informatie over: {gebruiker_acteur_id}\n")
 
     for key in film_details_volgorde_tuple:
         # Controleert of item in response zit

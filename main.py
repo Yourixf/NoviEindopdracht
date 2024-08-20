@@ -10,9 +10,6 @@ def start_applicatie():
     """
     stop_applicatie = False
 
-    #als je deze op True zet zie je de logging van mijn functies in de terminal terug, bijvoorbeeld server status code.
-    terminal_logging = False
-
     while not stop_applicatie:
         menu.print_hoofdmenu()
         gebruiker_menu_keuze = input("Welke optie wil je kiezen?: ")
@@ -28,8 +25,8 @@ def start_applicatie():
         elif gebruiker_menu_keuze == "3":
             print("Je hebt voor optie 3 gekozen.")
             menu.hoofdmenu_optie_3()
-        elif gebruiker_menu_keuze == "20":
-            api.api_calls.api_calls_movie.zoek_film_acteur_lijst("Ryan Reynolds")
+        #elif gebruiker_menu_keuze == "20":
+        #    api.api_calls.api_calls_movie.zoek_film_acteur_lijst("Ryan Reynolds")
         else:
             print("Geen geldige keuze! Maak een keuze doormiddel van een cijfer zonder spaties.")
 

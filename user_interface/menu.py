@@ -113,7 +113,6 @@ def hoofdmenu_optie_2():
         elif keuze_submenu == "3" and resulaten_gekregen == True:
             gebruiker_film_ID = input("Wat is het ID van de acteur? (zie lijst): ")
             api_calls_actor.zoek_acteur_details(gebruiker_film_ID)
-            #print("film detials oke dan ofzx")
         elif keuze_submenu not in ["1", "2", "3"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue

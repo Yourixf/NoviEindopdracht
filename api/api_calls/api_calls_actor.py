@@ -1,7 +1,6 @@
 import requests
 import config
 import api.api_error_handling as api_error_handling
-import api.api_data_handling.api_data_handling_general as api_data_handling_general
 import api.api_data_handling.api_data_handling_actor as api_data_handling_actor
 
 
@@ -64,7 +63,7 @@ def zoek_acteur_details(gebruiker_acteur_id=None):
     status_code = api_error_handling.controleer_status_code(response)
 
     if status_code[0] == 200:
-        resulaten_gekregen = api_data_handling_actor.formateer_acteur_details(response)
+        resulaten_gekregen = api_data_handling_actor.formateer_acteur_details(response, gebruiker_acteur_id)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
