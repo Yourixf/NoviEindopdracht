@@ -6,8 +6,8 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
     """
     Deze functie formateert de flm lijst response.
 
-    Deze functie kijkt eerst of er resultaten zijn, en indien er wel resultaten zijn word deze op een duidelijke manier
-    weergegeven aan de gebruiker.
+    Deze functie kijkt eerst of er resultaten zijn, en indien er wel resultaten zijn word deze op een duidelijke
+    manier weergegeven aan de gebruiker.
     """
     response_dict = response.json()
 
