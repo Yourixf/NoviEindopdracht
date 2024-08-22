@@ -1,6 +1,8 @@
 import requests
 import config
 import api.api_error_handling as api_error_handling
+import api.api_data_handling.api_data_handling_general as api_data_handling_general
+
 
 
 def test_api():
@@ -44,20 +46,14 @@ def krijg_beschikbare_film_genres():  #overbodig momenteel
     status_code = api_error_handling.controleer_status_code(response)
 
     if status_code[0] == 200:
-        print("Ja jonguh goed gegaan")
-        #resulaten_gekregen = api_data_handling.formateer_film_details(response)
+        resulaten_gekregen = api_data_handling_general.formateer_genre_lijst(response)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
-        #resulaten_gekregen = False
-
+        resulaten_gekregen = False
     # Word geprint als logging variabele in main.py op True staat.
     if config.terminal_logging:
         print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
 
-    response_dict = response.json()
-    for movie in response_dict.get("genres", []):
-        print(movie)
-
-    # make data handling function
+    return resulaten_gekregen
 
 

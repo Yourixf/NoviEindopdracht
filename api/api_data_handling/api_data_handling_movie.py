@@ -38,7 +38,7 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
         if config.terminal_logging:
             print("Logging - Film lijst weergegeven")
 
-        return True
+        return True, response
 
 
 def formateer_film_details(response=None):

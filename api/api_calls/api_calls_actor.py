@@ -6,7 +6,7 @@ import api.api_data_handling.api_data_handling_actor as api_data_handling_actor
 
 def zoek_acteur_naam(gebruiker_acteur_naam=None):
     """
-    Deze functie zoekt een naam van een actuer.
+    Deze functie zoekt een naam van een acteur.
 
     Deze functie wordt anageroepen vanuit menu.py en krijgt daarvanuit een acteur naam
     waarmee deze een api call maakt, de status daarvan controleerd, de data formateerd en laat zien
@@ -45,6 +45,11 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
 
 def zoek_acteur_details(gebruiker_acteur_id=None):
     """
+    Deze functie zoekt een weergeeft de details van een actuer.
+
+    Deze functie krijgt vanuit de aanroepende functie een acteur ID, deze wordt meegegven in
+    de api call, de status daarvan controleerd, de data formateerd en laat zien
+    en zal er een boolean vanuit de formateer functie worden geretourneerd aan de aanroepende functie
 
     """
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/person/"
