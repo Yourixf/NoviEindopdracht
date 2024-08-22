@@ -7,7 +7,7 @@ def formateer_maximale_grootte(value=None, max_length=50):
     Deze functie zorgt ervoor dat de text grootte gemaximaliseerd is.
 
     Deze functie word aangeroepen vanuit andere functie die iets printen, en geven de
-    print waarde me en een max lengte, indien geen lente word geleverd is deze standaard 50
+    print waarde een een max lengte, indien geen lente word geleverd is deze standaard 50
     en de waarde word geformateerd en geretouneerd.
     """
     if isinstance(value, str) and len(value) > max_length:
@@ -16,17 +16,26 @@ def formateer_maximale_grootte(value=None, max_length=50):
 
 
 def formateer_genre_lijst(response=None):
+    """
+    Deze functie formateert de genre lijst, gerkegen vanuit de API server.
+
+    Deze functie wordt aangeroepen vanuit api_calls_general.py krijg_beschikbare_film_genres().
+    Dan zal de functie over de data itereren, vervolgens formateren en presenteren aan de gebruiker.
+    Tot slot zal deze een boolean waarde en genre lijst retourneren aan de aanroepende functie.
+    """
+
     response_dict = response.json()
     genre_dict = {}
 
     if response_dict.get("genres", 0) == 0:
+        print("Geen genres vanaf de server gekregen.\n")
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen genres lijst weergegeven")
+            print("\nLogging - Geen genres lijst weergegeven\n")
         return False
     else:
         print("-" * 50)
-        print("Alle beschikbare genres vanuit de API server:")
+        print("Alle beschikbare genres vanuit de API server:\n")
         for genre in response_dict.get("genres", []):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
@@ -37,23 +46,32 @@ def formateer_genre_lijst(response=None):
             genre_dict.setdefault(genre_id, genre_name)
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Genre lijst weergegeven")
+            print("\nLogging - Genre lijst weergegeven\n")
 
         return True, genre_dict
 
+
 def formateer_genre_film_lijst(response=None, gebruiker_genre_id=None):
+    """
+    Deze functie formateert de genre film lijst.
+
+    Deze functie wordt aangeroepen vanuit menu.py filter_genre()
+    De functie za; over de data itereren, vervolgens formateren en presenteren aan de gebruiker.
+    Tot slot zal deze een boolean waarde en de response retourneren aan de aanroepende functie.
+    """
     response_dict = response.json()
-    resultaat_gevonden = None
+    resultaat_gevonden = False
 
     if response_dict.get("total_results", 0) == 0:
-        print(f"Geen resultaten")
+        print(f"Geen film(s) met jou gekozen genre.\n")
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen film lijst met genre weergegeven")
+            print("\nLogging - Geen film lijst met genre weergegeven\n")
         return False
     else:
 
         print("-" * 50)
+        print("Film(s) met jouw gekozen genre:\n")
         for movie in response_dict.get("results", []):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formater_maximale_grootte gemaximaliseerd
@@ -73,9 +91,10 @@ def formateer_genre_film_lijst(response=None, gebruiker_genre_id=None):
                 print(f"Film ID nummer: {movie_id}")
                 print("-" * 50)
 
-            # Word geprint als logging variabele in main.py op True staat.
+        if resultaat_gevonden == False:
+            print(f"Geen film(s)  met jou gekozen genre.\n")
+        # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging and resultaat_gevonden == True:
-            print("Logging - Film lijst met genre weergegeven")
+            print("\nLogging - Film lijst met genre weergegeven\n")
 
     return True, response
-

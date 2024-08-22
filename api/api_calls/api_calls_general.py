@@ -26,7 +26,15 @@ def test_api():
         print(movie)
 
 
-def krijg_beschikbare_film_genres():  #overbodig momenteel
+def krijg_beschikbare_film_genres():
+    """
+    Deze functie zoekt en weergeeft de beschikbare genres.
+
+    Deze functie wordt aangeroepen vanuit menu.py filter_genre(). Er zal een API request
+    gemaakt worden, de response wordt geformaateerd in api_data_handling_general.formateer_genre_lijst.
+    Daara wordt de boolean resultaten gekregen geretourneerd.
+
+    """
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/genre/movie/list"
 
     genre_taal = "nl"
@@ -52,7 +60,7 @@ def krijg_beschikbare_film_genres():  #overbodig momenteel
         resulaten_gekregen = False
     # Word geprint als logging variabele in main.py op True staat.
     if config.terminal_logging:
-        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen
 

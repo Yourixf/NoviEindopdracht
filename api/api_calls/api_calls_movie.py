@@ -39,7 +39,7 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
     # Word geprint als logging variabele in config.py op True staat.
     if config.terminal_logging:
-        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen
 
@@ -68,14 +68,14 @@ def zoek_film_details(gebruiker_film_ID=None):
     status_code = api_error_handling.controleer_status_code(response)
 
     if status_code[0] == 200:
-        resulaten_gekregen = api_data_handling_movie.formateer_film_details(response)
+        resulaten_gekregen = api_data_handling_movie.formateer_film_details(response, gebruiker_film_ID)
     else:
         print(f"{status_code[0]} - {status_code[1]}")
         resulaten_gekregen = False
 
     # Word geprint als logging variabele in main.py op True staat.
     if config.terminal_logging:
-        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen
 
@@ -115,6 +115,6 @@ def zoek_film_acteur_lijst(gebruiker_acteur_ID=None):
 
     # Word geprint als logging variabele in config.py op True staat.
     if config.terminal_logging:
-        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen

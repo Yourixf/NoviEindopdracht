@@ -72,7 +72,7 @@ def submenu_optie_1(resulaten_gekregen=None):
         "1. Terug naar het hoofdmenu\n",
         "2. Een andere film titel zoeken\n",
         "3. Weergeef details van een film\n",
-        "4. Filter op genre"
+        "4. Filter lijst op genre"
     ]
 
     submenu_optie_lijst_versie_2 = [
@@ -93,14 +93,20 @@ def submenu_optie_1(resulaten_gekregen=None):
 
 def filter_genre(response=None):
     resulaten_gekregen, genre_dict = api_calls_general.krijg_beschikbare_film_genres()
+    klaar_met_zoeken = False
+    genre_film_lijst_gekregen = False
 
-    while resulaten_gekregen is None or resulaten_gekregen == False:
-        gebruiker_genre_id = input("Wat is het ID van de genre? (zie lijst): ")
+    while not klaar_met_zoeken:
+        if genre_film_lijst_gekregen is False:
+            gebruiker_genre_id = input("Wat is het ID van de genre? (zie lijst, 0 om te annuleren): ")
+
         if gebruiker_genre_id in genre_dict:
-            api_data_handling_general.formateer_genre_film_lijst(response, gebruiker_genre_id)
+            genre_film_lijst_gekregen = api_data_handling_general.formateer_genre_film_lijst(response, gebruiker_genre_id)
+            klaar_met_zoeken = True
+        elif gebruiker_genre_id == "0":
+            klaar_met_zoeken = True
         elif gebruiker_genre_id not in genre_dict:
-            print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties")
-        print(response)
+            print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties.")
 
 
 def hoofdmenu_optie_2():
