@@ -92,6 +92,14 @@ def submenu_optie_1(resulaten_gekregen=None):
 
 
 def filter_genre(response=None):
+    """
+    Deze functie laat de beschikbare genres zien en laat de gebruiker de film lijst hiermee filteren
+
+    Deze functie wordt aangeroepen vanuit hoofdmenu_optie_1() en krijgt de response mee, de functie
+    roept de API een om de beschikbare genres te krijgen en weergeven, de gebruiker kiest hier 1 van
+    en er wordt gecontroleerd of deze klopt, en als laatst wordt deze vergeleken met de film lijst in de response.
+    """
+
     resulaten_gekregen, genre_dict = api_calls_general.krijg_beschikbare_film_genres()
     klaar_met_zoeken = False
     genre_film_lijst_gekregen = False
