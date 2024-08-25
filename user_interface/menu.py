@@ -4,6 +4,7 @@ import api.api_calls.api_calls_actor as api_calls_actor
 import api.api_calls.api_calls_movie as api_calls_movie
 from methods.general_methods import *
 
+
 def print_hoofdmenu():
     """
     Dit is een functie die het hoofdmenu print in de terminal
@@ -55,6 +56,8 @@ def hoofdmenu_optie_1():
             api_calls_movie.zoek_film_details(gebruiker_film_ID)
         elif keuze_submenu == "4" and resulaten_gekregen == True:
             filter_genre(response)
+        elif keuze_submenu == "5" and resulaten_gekregen == True:
+            filter_release_datum(response)
         elif keuze_submenu == "2":
             continue
         else:
@@ -74,7 +77,8 @@ def submenu_optie_1(resulaten_gekregen=None):
         "1. Terug naar het hoofdmenu\n",
         "2. Een andere film titel zoeken\n",
         "3. Weergeef details van een film\n",
-        "4. Filter lijst op genre\n"
+        "4. Filter lijst op genre\n",
+        "5. Filter lijst op uitgave jaar\n"
     ]
 
     submenu_optie_lijst_versie_2 = [
@@ -221,6 +225,7 @@ def submenu_optie_3(resulaten_gekregen=None):
 
     return keuze
 
+
 def hoofdmenu_optie_4():
     """
     Deze functie laat de gebruiker settings wijzigen in de applicatie.
@@ -253,4 +258,3 @@ def hoofdmenu_optie_4():
         elif gebruiker_optie_keuze not in ["1", "2"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue
-

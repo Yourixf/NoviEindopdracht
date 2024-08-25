@@ -21,12 +21,37 @@ def filter_genre(response=None):
             gebruiker_genre_id = input("Wat is het ID van de genre? (zie lijst, 0 om te annuleren): ")
 
         if gebruiker_genre_id in genre_dict:
-            genre_film_lijst_gekregen = api_data_handling_general.formateer_genre_film_lijst(response, gebruiker_genre_id)
+            genre_film_lijst_gekregen = api_data_handling_general.formateer_genre_film_lijst(response,
+                                                                                             gebruiker_genre_id)
             klaar_met_zoeken = True
         elif gebruiker_genre_id == "0":
             klaar_met_zoeken = True
         elif gebruiker_genre_id not in genre_dict:
             print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties.")
+
+
+def filter_release_datum(response=None):
+    """
+    Deze functie laat de zijn film lijst filteren via een release date
+
+    """
+
+    klaar_met_zoeken = False
+    gefilterde_lijst_gekregen = False
+
+    while not klaar_met_zoeken:
+        gebruiker_release_datum = input("Met welk jaartal wil je zoeken? (0 om te annuleren): ")
+
+        if gefilterde_lijst_gekregen is False:
+            gefilterde_lijst_gekregen = api_data_handling_general.formateer_release_datum_film_lijst(
+                response, gebruiker_release_datum)
+            if gefilterde_lijst_gekregen is True:
+                klaar_met_zoeken = True
+        elif gebruiker_release_datum == "0":
+            klaar_met_zoeken = True
+
+
+
 
 
 def terminal_logging():

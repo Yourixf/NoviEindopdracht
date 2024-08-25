@@ -16,8 +16,8 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Geen film lijst weergegeven\n")
-        return False
+            print("Logging - Geen film lijst weergegeven\n")
+        return False, response
     else:
         print("-" * 50)
         for movie in response_dict.get("results", []):
@@ -36,7 +36,7 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Film lijst weergegeven\n")
+            print("Logging - Film lijst weergegeven")
 
         return True, response
 
@@ -122,12 +122,12 @@ def formateer_film_details(response=None, gebruiker_film_ID=None):
     if key not in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Geen film details weergegeven\n")
+            print("Logging - Geen film details weergegeven\n")
         return False
     elif key in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Film details weergegeven\n")
+            print("\nLogging - Film details weergegeven")
         return True
 
 

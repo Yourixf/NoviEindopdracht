@@ -38,7 +38,7 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
 
     # Word geprint als logging variabele in config.py op True staat.
     if config.terminal_logging:
-        print(f"\nLogging - Response code: {status_code[0]} - {status_code[1]}\n")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen
 
@@ -75,6 +75,6 @@ def zoek_acteur_details(gebruiker_acteur_id=None):
 
     # Word geprint als logging variabele in main.py op True staat.
     if config.terminal_logging:
-        print(f"\nLogging - Response code: {status_code[0]} - {status_code[1]}\n")
+        print(f"Logging - Response code: {status_code[0]} - {status_code[1]}\n")
 
     return resulaten_gekregen

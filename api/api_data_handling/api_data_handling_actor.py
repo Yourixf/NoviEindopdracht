@@ -18,7 +18,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Geen acteur lijst weergegeven\n")
+            print("Logging - Geen acteur lijst weergegeven\n")
 
         return False
     else:
@@ -59,7 +59,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Acteur lijst weergegeven\n")
+            print("Logging - Acteur lijst weergegeven\n")
 
         return True
 
@@ -132,10 +132,10 @@ def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
     if key not in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Geen acteur details weergegeven\n")
+            print("Logging - Geen acteur details weergegeven\n")
         return False
     elif key in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Acteur details weergegeven\n")
+            print("Logging - Acteur details weergegeven\n")
         return True
