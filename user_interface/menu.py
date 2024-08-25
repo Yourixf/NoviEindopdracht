@@ -1,8 +1,7 @@
 import user_interface.menu as menu
 import api.api_calls.api_calls_actor as api_calls_actor
 import api.api_calls.api_calls_movie as api_calls_movie
-import api.api_calls.api_calls_general as api_calls_general
-import api.api_data_handling.api_data_handling_general as api_data_handling_general
+from methods.general_methods import filter_genre
 
 
 def print_hoofdmenu():
@@ -55,6 +54,8 @@ def hoofdmenu_optie_1():
             api_calls_movie.zoek_film_details(gebruiker_film_ID)
         elif keuze_submenu == "4" and resulaten_gekregen == True:
             filter_genre(response)
+        elif keuze_submenu == "2":
+            continue
         else:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue
@@ -72,7 +73,7 @@ def submenu_optie_1(resulaten_gekregen=None):
         "1. Terug naar het hoofdmenu\n",
         "2. Een andere film titel zoeken\n",
         "3. Weergeef details van een film\n",
-        "4. Filter lijst op genre"
+        "4. Filter lijst op genre\n"
     ]
 
     submenu_optie_lijst_versie_2 = [
@@ -89,32 +90,6 @@ def submenu_optie_1(resulaten_gekregen=None):
     keuze = input("Maak een keuze: ")
 
     return keuze
-
-
-def filter_genre(response=None):
-    """
-    Deze functie laat de beschikbare genres zien en laat de gebruiker de film lijst hiermee filteren
-
-    Deze functie wordt aangeroepen vanuit hoofdmenu_optie_1() en krijgt de response mee, de functie
-    roept de API een om de beschikbare genres te krijgen en weergeven, de gebruiker kiest hier 1 van
-    en er wordt gecontroleerd of deze klopt, en als laatst wordt deze vergeleken met de film lijst in de response.
-    """
-
-    resulaten_gekregen, genre_dict = api_calls_general.krijg_beschikbare_film_genres()
-    klaar_met_zoeken = False
-    genre_film_lijst_gekregen = False
-
-    while not klaar_met_zoeken:
-        if genre_film_lijst_gekregen is False:
-            gebruiker_genre_id = input("Wat is het ID van de genre? (zie lijst, 0 om te annuleren): ")
-
-        if gebruiker_genre_id in genre_dict:
-            genre_film_lijst_gekregen = api_data_handling_general.formateer_genre_film_lijst(response, gebruiker_genre_id)
-            klaar_met_zoeken = True
-        elif gebruiker_genre_id == "0":
-            klaar_met_zoeken = True
-        elif gebruiker_genre_id not in genre_dict:
-            print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties.")
 
 
 def hoofdmenu_optie_2():

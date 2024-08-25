@@ -44,6 +44,9 @@ def formateer_genre_lijst(response=None):
 
             print(f"ID: {genre_id}, {genre_name}")
             genre_dict.setdefault(genre_id, genre_name)
+
+        print("-" * 50, "\n")
+
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
             print("\nLogging - Genre lijst weergegeven\n")
@@ -69,9 +72,7 @@ def formateer_genre_film_lijst(response=None, gebruiker_genre_id=None):
             print("\nLogging - Geen film lijst met genre weergegeven\n")
         return False
     else:
-
         print("-" * 50)
-        print("Film(s) met jouw gekozen genre:\n")
         for movie in response_dict.get("results", []):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formater_maximale_grootte gemaximaliseerd
@@ -93,7 +94,10 @@ def formateer_genre_film_lijst(response=None, gebruiker_genre_id=None):
 
         if resultaat_gevonden == False:
             print(f"Geen film(s)  met jou gekozen genre.\n")
+        elif resultaat_gevonden == True:
+            print("Alle film(s) met jouw gekozen genre.\n")
         # Word geprint als logging variabele in main.py op True staat.
+
         if config.terminal_logging and resultaat_gevonden == True:
             print("\nLogging - Film lijst met genre weergegeven\n")
 
