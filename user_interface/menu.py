@@ -1,8 +1,8 @@
+import config
 import user_interface.menu as menu
 import api.api_calls.api_calls_actor as api_calls_actor
 import api.api_calls.api_calls_movie as api_calls_movie
-from methods.general_methods import filter_genre
-
+from methods.general_methods import *
 
 def print_hoofdmenu():
     """
@@ -14,15 +14,16 @@ def print_hoofdmenu():
         "1. Zoek een film op basis van een titel\n",
         "2. Zoek acteur op basis van een naam\n",
         "3. Zoek een film door middel van een acteur\n"
-        "4. Stop applicatie\n"
+        "4. Instellingen\n"
+        "5. Stop applicatie\n"
     ]
 
     hoofd_menu = [
-        "|||||||||||||||||||||||||||||||\n",
+        f"{"-" * 30}\n",
         "Welkom in het hoofdmenu!\n",
         "Kies hieronder een van de acties via het cijfer.\n",
         "".join(hoofd_opties_lijst),
-        "|||||||||||||||||||||||||||||||\n"
+        f"{"-" * 30}\n",
     ]
 
     return print("".join(hoofd_menu))
@@ -219,3 +220,37 @@ def submenu_optie_3(resulaten_gekregen=None):
     keuze = input("Maak een keuze: ")
 
     return keuze
+
+def hoofdmenu_optie_4():
+    """
+    Deze functie laat de gebruiker settings wijzigen in de applicatie.
+
+    Deze functie wordt aangeroepen vanuit main.py, laat de huidige settings zien,
+    en laat de gebruiker deze wijzigen.
+    """
+
+    def print_optie_lijst():
+        settings_menu_lijst = [
+            "\nWat wil je nu doen?\n",
+            "1. Terug naar het hoofdmenu\n",
+            "2. Terminal logging\n"
+        ]
+
+        print("".join(settings_menu_lijst))
+
+    klaar_met_wijzigen = False
+
+    print_optie_lijst()
+
+    while not klaar_met_wijzigen:
+        gebruiker_optie_keuze = input("Maak een keuze: ")
+
+        if gebruiker_optie_keuze == "1":
+            klaar_met_wijzigen = True
+        elif gebruiker_optie_keuze == "2":
+            terminal_logging()
+            print_optie_lijst()
+        elif gebruiker_optie_keuze not in ["1", "2"]:
+            print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
+            continue
+

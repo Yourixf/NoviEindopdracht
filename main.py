@@ -14,7 +14,7 @@ def start_applicatie():
         menu.print_hoofdmenu()
         gebruiker_menu_keuze = input("Welke optie wil je kiezen?: ")
 
-        if gebruiker_menu_keuze == "4":
+        if gebruiker_menu_keuze == "5":
             stop_applicatie = True
         elif gebruiker_menu_keuze == "1":
             print("Je hebt voor optie 1 gekozen.")
@@ -25,6 +25,9 @@ def start_applicatie():
         elif gebruiker_menu_keuze == "3":
             print("Je hebt voor optie 3 gekozen.")
             menu.hoofdmenu_optie_3()
+        elif gebruiker_menu_keuze == "4":
+            print("Je hebt voor optie 4 gekozen.")
+            menu.hoofdmenu_optie_4()
         #elif gebruiker_menu_keuze == "20":
         #    api.api_calls.api_calls_movie.zoek_film_acteur_lijst("Ryan Reynolds")
         else:

@@ -1,3 +1,4 @@
+import config
 from api.api_calls import api_calls_general as api_calls_general
 from api.api_data_handling import api_data_handling_general as api_data_handling_general
 
@@ -26,3 +27,47 @@ def filter_genre(response=None):
             klaar_met_zoeken = True
         elif gebruiker_genre_id not in genre_dict:
             print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties.")
+
+
+def terminal_logging():
+    """
+    Deze functie laat de gebruiker terminal logging uit of aanzetten
+    """
+    def print_optie_lijst():
+        menu_optie = "aanzetten" if config.terminal_logging == False else "uitzetten"
+
+        terminal_logging_optie_lijst = [
+            "Wat wil je doen?\n",
+            "1. Terug\n",
+            f"2. Terminal logging {menu_optie} \n"
+        ]
+
+        print("".join(terminal_logging_optie_lijst))
+
+    def print_status():
+        if not config.terminal_logging:
+            print("Terminal logging staat uit.\n")
+        elif config.terminal_logging:
+            print("Terminal logging staat aan.\n")
+
+    print_status()
+    print_optie_lijst()
+
+    klaar_met_wijzigen = False
+
+    while not klaar_met_wijzigen:
+        gebruiker_optie_keuze = input("Maak een keuze: ")
+
+        if gebruiker_optie_keuze == "1":
+            klaar_met_wijzigen = True
+        elif gebruiker_optie_keuze == "2":
+            if not config.terminal_logging:
+                config.terminal_logging = True
+            elif config.terminal_logging:
+                config.terminal_logging = False
+
+            print_status()
+            print_optie_lijst()
+
+        elif gebruiker_optie_keuze not in ["1", "2",]:
+            print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
