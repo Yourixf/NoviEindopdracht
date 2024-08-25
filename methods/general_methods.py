@@ -51,13 +51,11 @@ def filter_release_datum(response=None):
             klaar_met_zoeken = True
 
 
-
-
-
 def terminal_logging():
     """
     Deze functie laat de gebruiker terminal logging uit of aanzetten
     """
+
     def print_optie_lijst():
         menu_optie = "aanzetten" if config.terminal_logging == False else "uitzetten"
 
@@ -94,5 +92,5 @@ def terminal_logging():
             print_status()
             print_optie_lijst()
 
-        elif gebruiker_optie_keuze not in ["1", "2",]:
+        elif gebruiker_optie_keuze not in ["1", "2", ]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
