@@ -1,6 +1,6 @@
 import config
 import api.api_data_handling.api_data_handling_general as api_data_handling_general
-
+from api.api_data_handling.api_data_handling_general import formateer_maximale_grootte
 
 def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
     """
@@ -26,22 +26,18 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
         for movie in response_dict.get("results", []):
             # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
             # met ONBEKEND, en deze waarde wordt via formateer_maximale_grootte gemaximaliseerd
-            name = api_data_handling_general.formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
-            original_name = api_data_handling_general.formateer_maximale_grootte(
-                movie.get("original_name", "").strip() or "ONBEKEND")
-            gender = api_data_handling_general.formateer_maximale_grootte(
-                str(movie.get("gender", "")).strip() or "ONBEKEND")
-            known_for_department = api_data_handling_general.formateer_maximale_grootte(
-                movie.get("known_for_department").strip() or "ONBEKEND")
-            popularity = api_data_handling_general.formateer_maximale_grootte(
-                str(movie.get("popularity", "")).strip() or "ONBEKEND")
-            known_for_list = api_data_handling_general.formateer_maximale_grootte(movie.get("known_for", []))
-            known_for_movie = api_data_handling_general.formateer_maximale_grootte(
-                str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
-            actor_id = api_data_handling_general.formateer_maximale_grootte(
-                str(movie.get("id", "")).strip() or "ONBEKEND")
+            name = formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
+            original_name = formateer_maximale_grootte(movie.get("original_name", "").strip() or "ONBEKEND")
+            gender = formateer_maximale_grootte(str(movie.get("gender", "")).strip() or "ONBEKEND")
+            known_for_department = formateer_maximale_grootte(movie.get("known_for_department").strip() or "ONBEKEND")
+            popularity = formateer_maximale_grootte(str(movie.get("popularity", "")).strip() or "ONBEKEND")
+            known_for_list = formateer_maximale_grootte(movie.get("known_for", []))
+            known_for_movie = formateer_maximale_grootte(str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
+            actor_id = formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
 
-            if gender == "1":
+            if gender == "0":
+                gender = "Onbekend"
+            elif gender == "1":
                 gender = "Vrouw"
             elif gender == "2":
                 gender = "Man"
@@ -61,7 +57,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
         if config.terminal_logging:
             print("Logging - Acteur lijst weergegeven\n")
 
-        return True
+        return True, response
 
 
 def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
@@ -139,3 +135,71 @@ def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
         if config.terminal_logging:
             print("Logging - Acteur details weergegeven\n")
         return True
+
+def formateer_geslacht_acteur_lijst(response=None, gebruiker_acteur_geslacht=None):
+    """
+    Deze functie formateert de geslacht acteur lijst.
+
+    Deze functie wordt aangeropen vanuit general_methods.py filter_acteur_geslacht().
+    De functie zal over de data itereren, formateren en presenteren aan de gebruiker
+    als het gekozen geslacht in de response voorkomt. Tot slot zal deze een boleon waarde
+    retourneren aan de aanroepende functie
+
+    """
+
+    response_dict = response.json()
+    resultaat_gevonden = False
+
+    if response_dict.get("total_results", 0) == 0:
+        print(f"Geen acteur(s) gevonde met jouw  gekozen geslacht\n")
+
+        # Word geprint als logging variabele in main.py op True staat.
+        if config.terminal_logging:
+            print("Logging - Geen acteur lijst weergegeven\n")
+
+        return False
+    else:
+        print("-" * 50)
+        for movie in response_dict.get("results", []):
+            # De Get methode controleert of de waarde niet bestaat, en de strip methode vervangt de niet bestaande
+            # met ONBEKEND, en deze waarde wordt via formater_maximale_grootte gemaximaliseerd
+            name = formateer_maximale_grootte(movie.get("name", "").strip() or "ONBEKEND")
+            original_name = formateer_maximale_grootte(movie.get("original_name", "").strip() or "ONBEKEND")
+            gender = formateer_maximale_grootte(str(movie.get("gender", "")).strip() or "ONBEKEND")
+            known_for_department = formateer_maximale_grootte(movie.get("known_for_department").strip() or "ONBEKEND")
+            popularity = formateer_maximale_grootte(str(movie.get("popularity", "")).strip() or "ONBEKEND")
+            known_for_list = formateer_maximale_grootte(movie.get("known_for", []))
+            known_for_movie = formateer_maximale_grootte(
+                str(known_for_list[0].get("original_title")).strip() or "ONBEKEND")
+            actor_id = formateer_maximale_grootte(str(movie.get("id", "")).strip() or "ONBEKEND")
+
+            if gender == "0":
+                geslacht = "Onbekend"
+            elif gender == "1":
+                geslacht = "Vrouw"
+            elif gender == "2":
+                geslacht = "Man"
+            elif gender == "3":
+                geslacht = "Non binair"
+
+            if gender == gebruiker_acteur_geslacht:
+                resultaat_gevonden = True
+                print(f"Naam: {name}")
+                print(f"Oorspronkelijke naam: {original_name}")
+                print(f"Geslacht: {geslacht}")
+                print(f"Bekend voor: {known_for_department}")
+                print(f"Populariteit score: {popularity}")
+                print(f"Bekend van de titel: {known_for_movie}")
+                print(f"Acteur ID nummer: {actor_id}")
+                print("-" * 50)
+
+        if resultaat_gevonden == False:
+            print(f"Geen acteur(s) met jou gekozen geslacht.\n")
+        elif resultaat_gevonden == True:
+            print("Acteur(s) met jouw gekozen geslacht.\n")
+        # Word geprint als logging variabele in main.py op True staat.
+
+        if config.terminal_logging and resultaat_gevonden == True:
+            print("Logging - Acteur lijst met geslacht weergegeven\n")
+
+        return resultaat_gevonden
