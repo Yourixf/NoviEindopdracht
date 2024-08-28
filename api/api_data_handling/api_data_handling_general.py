@@ -31,7 +31,7 @@ def formateer_genre_lijst(response=None):
         print("Geen genres vanaf de server gekregen.\n")
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Geen genres lijst weergegeven\n")
+            print("Logging - Geen genres lijst weergegeven")
         return False
     else:
         print("-" * 50)
@@ -49,8 +49,6 @@ def formateer_genre_lijst(response=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("\nLogging - Genre lijst weergegeven\n")
+            print("Logging - Genre lijst weergegeven")
 
         return True, genre_dict
-
-

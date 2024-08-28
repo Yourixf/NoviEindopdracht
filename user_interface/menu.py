@@ -2,7 +2,7 @@ import config
 import user_interface.menu as menu
 import api.api_calls.api_calls_actor as api_calls_actor
 import api.api_calls.api_calls_movie as api_calls_movie
-from methods.general_methods import *
+from methods.helper_methods import *
 
 
 def print_hoofdmenu():
@@ -45,15 +45,19 @@ def hoofdmenu_optie_1():
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu == "2":
             gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
-            resulaten_gekregen, response = api_calls_movie.zoek_film_naam(gebruiker_film_titel)
+
+            if gebruiker_film_titel != "" or None:
+                resulaten_gekregen, response = api_calls_movie.zoek_film_naam(gebruiker_film_titel)
+            else:
+                print("\nOngeldig invoer, voer een titel in.\n")
+                continue
 
         keuze_submenu = menu.submenu_optie_1(resulaten_gekregen)
 
         if keuze_submenu == "1":
             klaar_met_zoeken = True
         elif keuze_submenu == "3" and resulaten_gekregen == True:
-            gebruiker_film_ID = input("Wat is het ID van de film? (zie lijst): ")
-            api_calls_movie.zoek_film_details(gebruiker_film_ID)
+            krijg_film_details()
         elif keuze_submenu == "4" and resulaten_gekregen == True:
             filter_genre(response)
         elif keuze_submenu == "5" and resulaten_gekregen == True:
@@ -115,15 +119,19 @@ def hoofdmenu_optie_2():
     while not klaar_met_zoeken:
         if resultaten_gekregen is None or keuze_submenu == "2":
             gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
-            resultaten_gekregen, response = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
+
+            if gebruiker_acteur_naam != "" or None:
+                resultaten_gekregen, response = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
+            else:
+                print("\nOngeldig invoer, voer een naam in\n")
+                continue
 
         keuze_submenu = menu.submenu_optie_2(resultaten_gekregen)
 
         if keuze_submenu == "1":
             klaar_met_zoeken = True
         elif keuze_submenu == "3" and resultaten_gekregen == True:
-            gebruiker_film_ID = input("Wat is het ID van de acteur? (zie lijst): ")
-            api_calls_actor.zoek_acteur_details(gebruiker_film_ID)
+            krijg_acteur_details()
         elif keuze_submenu == "4" and resultaten_gekregen == True:
             filter_acteur_geslacht(response)
         elif keuze_submenu not in ["1", "2", "3", "4"]:
@@ -180,19 +188,27 @@ def hoofdmenu_optie_3():
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu in ["2", "4"]:
             gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
-            resulaten_gekregen = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
 
-            if resulaten_gekregen == True:
+            if gebruiker_acteur_naam != "" or None:
+                resulaten_gekregen = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
+            else:
+                print("\nOngeldig invoer, voer een naam in.\n")
+                continue
+
+            # TO DO: fix loop, misch helper functie zoals bij de rest on sync te maken met de anderen functies
+            if resulaten_gekregen:
                 gebruiker_acteur_ID = input("Wat is het ID van de acteur waarmee je wilt zoeken?: ")
-                resulaten_gekregen = api_calls_movie.zoek_film_acteur_lijst(gebruiker_acteur_ID)
+                if gebruiker_acteur_ID != "" or None:
+                    resulaten_gekregen = api_calls_movie.zoek_film_acteur_lijst(gebruiker_acteur_ID)
+                else:
+                    print("\nOngeldig invoer, voer een ID in.")
 
         keuze_submenu = menu.submenu_optie_3(resulaten_gekregen)
 
         if keuze_submenu == "1":
             klaar_met_zoeken = True
         elif keuze_submenu == "3" and resulaten_gekregen == True:
-            gebruiker_acteur_ID = input("Wat is het ID van de acteur waarvan je de details wilt zoeken?: ")
-            api_calls_actor.zoek_acteur_details(gebruiker_acteur_ID)
+            krijg_acteur_details()
         elif keuze_submenu not in ["1", "2", "3", "4"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
             continue

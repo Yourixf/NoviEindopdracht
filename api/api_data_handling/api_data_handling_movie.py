@@ -17,7 +17,7 @@ def formateer_film_lijst(response=None, gebruiker_film_titel=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen film lijst weergegeven\n")
+            print("Logging - Geen film lijst weergegeven")
         return False, response
     else:
         print("-" * 50)
@@ -118,7 +118,10 @@ def formateer_film_details(response=None, gebruiker_film_ID=None):
             print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
 
         elif key not in response_dict:
+            print("-" * 50)
             print("Geen details gevonden.")
+
+    print("-" * 50)
 
     if key not in response_dict:
         # Word geprint als logging variabele in main.py op True staat.

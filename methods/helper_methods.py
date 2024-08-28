@@ -3,6 +3,8 @@ from api.api_calls import api_calls_general as api_calls_general
 from api.api_data_handling.api_data_handling_general import *
 from api.api_data_handling.api_data_handling_movie import *
 from api.api_data_handling.api_data_handling_actor import *
+from api.api_calls.api_calls_movie import *
+from api.api_calls.api_calls_actor import *
 
 
 def terminal_logging():
@@ -50,6 +52,44 @@ def terminal_logging():
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
 
 
+def krijg_film_details():
+    """
+    NOG BESCHRIJVEN
+    """
+
+    klaar_met_zoeken = False
+
+    while not klaar_met_zoeken:
+        gebruiker_film_ID = input("Wat is het ID van de film? (zie lijst, 0 om te annuleren): ")
+
+        if gebruiker_film_ID == "0":
+            klaar_met_zoeken = True
+        elif gebruiker_film_ID == "" or None:
+            print("\nOngeldig invoer, voer een ID in.\n")
+        else:
+            details_gekregen = zoek_film_details(gebruiker_film_ID)
+            if details_gekregen is True:
+                klaar_met_zoeken = True
+
+
+def krijg_acteur_details():
+    """
+    NOG BESCHRIJVEN
+    """
+    klaar_met_zoeken = False
+
+    while not klaar_met_zoeken:
+        gebruiker_acteur_ID = input("Wat is het ID van de acteur? (zie lijst, 0 om te annuleren): ")
+
+        if gebruiker_acteur_ID == "0":
+            klaar_met_zoeken = True
+        elif gebruiker_acteur_ID == "" or None:
+            print("\nOngeldig invoer, voer een ID in.\n")
+        else:
+            details_gekregen = zoek_acteur_details(gebruiker_acteur_ID)
+            if details_gekregen is True:
+                klaar_met_zoeken = True
+
 def filter_genre(response=None):
     """
     Deze functie laat de beschikbare genres zien en laat de gebruiker de film lijst hiermee filteren
@@ -73,7 +113,8 @@ def filter_genre(response=None):
         elif gebruiker_genre_id == "0":
             klaar_met_zoeken = True
         elif gebruiker_genre_id not in genre_dict:
-            print("Ongeldig invoer, vul een ID in zonder extra tekens of spaties.")
+            print("\nOngeldig invoer, vul een ID in zonder extra tekens of spaties.\n")
+
 
 
 def filter_release_datum(response=None):
@@ -89,6 +130,8 @@ def filter_release_datum(response=None):
 
         if gebruiker_release_datum == "0":
             klaar_met_zoeken = True
+        elif gebruiker_release_datum == "" or None:
+            print("\nOngeldig invoer, voer een jaartal in.\n")
         else:
             if gefilterde_lijst_gekregen is False:
                 gefilterde_lijst_gekregen = formateer_release_datum_film_lijst(response, gebruiker_release_datum)

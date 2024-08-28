@@ -29,7 +29,6 @@ def zoek_acteur_naam(gebruiker_acteur_naam=None):
     status_code = api_error_handling.controleer_status_code(response)
 
     # Als server response code 200 is zal de data worden geformateerd in formateer_acteur_lijst
-
     if status_code[0] == 200:
         resulaten_gekregen = api_data_handling_actor.formateer_acteur_lijst(response, gebruiker_acteur_naam)
     else:

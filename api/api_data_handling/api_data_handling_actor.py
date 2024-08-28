@@ -18,9 +18,9 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen acteur lijst weergegeven\n")
+            print("Logging - Geen acteur lijst weergegeven")
 
-        return False
+        return False, response
     else:
         print("-" * 50)
         for movie in response_dict.get("results", []):
@@ -55,7 +55,7 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Acteur lijst weergegeven\n")
+            print("Logging - Acteur lijst weergegeven")
 
         return True, response
 
@@ -123,24 +123,27 @@ def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
             print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
 
         elif key not in response_dict:
+            print("-" * 50)
             print("Geen details gevonden.")
+
+    print("-" * 50)
 
     if key not in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Geen acteur details weergegeven\n")
+            print("Logging - Geen acteur details weergegeven")
         return False
     elif key in response_dict:
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
-            print("Logging - Acteur details weergegeven\n")
+            print("Logging - Acteur details weergegeven")
         return True
 
 def formateer_geslacht_acteur_lijst(response=None, gebruiker_acteur_geslacht=None):
     """
     Deze functie formateert de geslacht acteur lijst.
 
-    Deze functie wordt aangeropen vanuit general_methods.py filter_acteur_geslacht().
+    Deze functie wordt aangeropen vanuit helper_methods.py filter_acteur_geslacht().
     De functie zal over de data itereren, formateren en presenteren aan de gebruiker
     als het gekozen geslacht in de response voorkomt. Tot slot zal deze een boleon waarde
     retourneren aan de aanroepende functie
