@@ -1,8 +1,8 @@
-import config
 import user_interface.menu as menu
-import api.api_calls.api_calls_actor as api_calls_actor
-import api.api_calls.api_calls_movie as api_calls_movie
-from methods.helper_methods import *
+from methods.helper_methods_actor import krijg_acteur_lijst, krijg_acteur_details, filter_acteur_geslacht
+from methods.helper_methods_general import *
+from methods.helper_methods_movie import krijg_film_lijst, krijg_film_details, filter_release_datum, \
+    krijg_film_acteur_lijst
 
 
 def print_hoofdmenu():
@@ -44,13 +44,7 @@ def hoofdmenu_optie_1():
 
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu == "2":
-            gebruiker_film_titel = input("Wat is de titel van de film die je wilt opzoeken?: ")
-
-            if gebruiker_film_titel != "" or None:
-                resulaten_gekregen, response = api_calls_movie.zoek_film_naam(gebruiker_film_titel)
-            else:
-                print("\nOngeldig invoer, voer een titel in.\n")
-                continue
+            resulaten_gekregen, response = krijg_film_lijst()
 
         keuze_submenu = menu.submenu_optie_1(resulaten_gekregen)
 
@@ -107,9 +101,9 @@ def hoofdmenu_optie_2():
     retourneert de response.
 
     Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
-    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een api call,
-    de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee wordt de details
-    van een acteur gelaten zien.
+    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een
+    api call, de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee
+    wordt de details van een acteur gelaten zien.
     """
 
     klaar_met_zoeken = False
@@ -118,13 +112,7 @@ def hoofdmenu_optie_2():
 
     while not klaar_met_zoeken:
         if resultaten_gekregen is None or keuze_submenu == "2":
-            gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
-
-            if gebruiker_acteur_naam != "" or None:
-                resultaten_gekregen, response = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
-            else:
-                print("\nOngeldig invoer, voer een naam in\n")
-                continue
+            resultaten_gekregen, response = krijg_acteur_lijst()
 
         keuze_submenu = menu.submenu_optie_2(resultaten_gekregen)
 
@@ -176,9 +164,10 @@ def hoofdmenu_optie_3():
     retourneert de response.
 
     Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
-    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een api call,
-    de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee wordt een film lijst
-    geretourneerd waar de actuer ID instaat. Hierna krijgt de gebruiker de opties om de bovenstaande functies te gebruiken.
+    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een
+    api call, de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee
+    wordt een film lijst geretourneerd waar de actuer ID instaat. Hierna krijgt de gebruiker de opties om de
+    bovenstaande functies te gebruiken.
     """
 
     klaar_met_zoeken = False
@@ -187,21 +176,11 @@ def hoofdmenu_optie_3():
 
     while not klaar_met_zoeken:
         if resulaten_gekregen is None or keuze_submenu in ["2", "4"]:
-            gebruiker_acteur_naam = input("Wat is de naam van de acteur die je wilt opzoeken?: ")
-
-            if gebruiker_acteur_naam != "" or None:
-                resulaten_gekregen = api_calls_actor.zoek_acteur_naam(gebruiker_acteur_naam)
-            else:
-                print("\nOngeldig invoer, voer een naam in.\n")
-                continue
+            resulaten_gekregen, response = krijg_acteur_lijst()
 
             # TO DO: fix loop, misch helper functie zoals bij de rest on sync te maken met de anderen functies
-            if resulaten_gekregen:
-                gebruiker_acteur_ID = input("Wat is het ID van de acteur waarmee je wilt zoeken?: ")
-                if gebruiker_acteur_ID != "" or None:
-                    resulaten_gekregen = api_calls_movie.zoek_film_acteur_lijst(gebruiker_acteur_ID)
-                else:
-                    print("\nOngeldig invoer, voer een ID in.")
+            if resulaten_gekregen is True:
+                krijg_film_acteur_lijst()
 
         keuze_submenu = menu.submenu_optie_3(resulaten_gekregen)
 
