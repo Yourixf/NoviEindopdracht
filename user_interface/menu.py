@@ -19,11 +19,11 @@ def print_hoofdmenu():
     ]
 
     hoofd_menu = [
-        f"{"-" * 30}\n",
+        f"{'-' * 30}\n",
         "Welkom in het hoofdmenu!\n",
         "Kies hieronder een van de acties via het cijfer.\n",
         "".join(hoofd_opties_lijst),
-        f"{"-" * 30}\n",
+        f"{'-' * 30}\n",
     ]
 
     return print("".join(hoofd_menu))
