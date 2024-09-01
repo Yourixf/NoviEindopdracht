@@ -19,15 +19,19 @@ def formateer_genre_lijst(response=None):
     """
     Deze functie formateert de genre lijst, gerkegen vanuit de API server.
 
-    Deze functie wordt aangeroepen vanuit api_calls_general.py krijg_beschikbare_film_genres().
-    Dan zal de functie over de data itereren, vervolgens formateren en presenteren aan de gebruiker.
+    De functie zal over de data itereren, vervolgens formateren en presenteren aan de gebruiker.
     Tot slot zal deze een boolean waarde en genre lijst retourneren aan de aanroepende functie.
     """
 
-    response_dict = response.json()
+    if response is not None:
+        response_dict = response.json()
+
     genre_dict = {}
 
-    if response_dict.get("genres", 0) == 0:
+    if response is None:
+        print("Er ging wat mis... Ik heb geen data meegekregen.")
+        return False
+    elif response_dict.get("genres", 0) == 0:
         print("Geen genres vanaf de server gekregen.\n")
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:

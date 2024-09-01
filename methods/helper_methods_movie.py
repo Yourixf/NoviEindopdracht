@@ -4,8 +4,12 @@ from api.api_data_handling.api_data_handling_movie import formateer_release_datu
 
 def krijg_film_lijst():
     """
-    nog beschrijven v2
+    Deze functie laat de gebruiker via een film naam zoeken naar een film.
+
+    De gebruiker zal voor een film titel worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in een api call.
     """
+
     klaar_met_zoeken = False
     resultaten_gekregen = False, {}
 
@@ -27,7 +31,10 @@ def krijg_film_lijst():
 
 def krijg_film_details():
     """
-    NOG BESCHRIJVEN
+    Deze functie laat de gebruiker via een film ID de film details zoeken en weergeven.
+
+    De gebruiker zal voor een film ID worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in een api call.
     """
 
     klaar_met_zoeken = False
@@ -47,8 +54,12 @@ def krijg_film_details():
 
 def krijg_film_acteur_lijst():
     """
-    nog bescrhijven v2
+    Deze functie laat de gebruiker via een acteur ID zoeken naar een film.
+
+    De gebruiker zal voor een acteur ID worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in een api call.
     """
+
     klaar_met_zoeken = False
 
     while not klaar_met_zoeken:
@@ -66,7 +77,10 @@ def krijg_film_acteur_lijst():
 
 def filter_release_datum(response=None):
     """
-    Deze functie laat de zijn film lijst filteren via een release date
+    Deze functie laat de gebruiker een film lijst filteren via een release date jaartal.
+
+    De gebruiker zal voor een jaartal worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze gebruikt
+    worden in formateer functie.
     """
 
     klaar_met_zoeken = False

@@ -27,8 +27,6 @@ def start_applicatie():
         elif gebruiker_menu_keuze == "4":
             print("\nJe hebt voor optie 4 gekozen.\n")
             menu.hoofdmenu_optie_4()
-        #elif gebruiker_menu_keuze == "20":
-        #    api.api_calls.api_calls_movie.zoek_film_acteur_lijst("Ryan Reynolds")
         else:
             print("\nGeen geldige keuze! Maak een keuze doormiddel van een cijfer zonder spaties.\n")
 

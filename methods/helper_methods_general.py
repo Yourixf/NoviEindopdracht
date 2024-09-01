@@ -5,7 +5,10 @@ from api.api_calls.api_calls_actor import *
 
 def terminal_logging():
     """
-    Deze functie laat de gebruiker terminal logging uit of aanzetten
+    Deze functie laat de gebruiker terminal logging uit of aanzetten.
+
+    Via een keuzemenu zal de gebruiker de optie krijgen om de terminal logging optie aan of uit te zetten. De input van
+    de gebruiker zal worden gecontroleerd. De status van de setting zal worden weergegeven aan de gebruiker.
     """
 
     def print_optie_lijst():
@@ -44,17 +47,17 @@ def terminal_logging():
             print_status()
             print_optie_lijst()
 
-        elif gebruiker_optie_keuze not in ["1", "2", ]:
+        elif gebruiker_optie_keuze not in ["1", "2"]:
             print("Ongeldig invoer, voer een van de bovenstaande cijfer in zonder spaties of extra tekens")
 
 
 def filter_genre(response=None):
     """
-    Deze functie laat de beschikbare genres zien en laat de gebruiker de film lijst hiermee filteren
+    Deze functie laat de beschikbare genres zien en laat de gebruiker de film lijst hiermee filteren.
 
-    Deze functie wordt aangeroepen vanuit hoofdmenu_optie_1() en krijgt de response mee, de functie
-    roept de API een om de beschikbare genres te krijgen en weergeven, de gebruiker kiest hier 1 van
-    en er wordt gecontroleerd of deze klopt, en als laatst wordt deze vergeleken met de film lijst in de response.
+    Deze functie wordt aangeroepen vanuit hoofdmenu_optie_1() en krijgt de response mee, de functie roept de API aan
+    om de beschikbare genres te krijgen en weergeven, de gebruiker kiest hier 1 van en er wordt gecontroleerd of deze
+    klopt, en als laatst wordt deze vergeleken met de film lijst in de response.
     """
 
     resulaten_gekregen, genre_dict = api_calls_general.krijg_beschikbare_film_genres()
@@ -72,5 +75,3 @@ def filter_genre(response=None):
             klaar_met_zoeken = True
         elif gebruiker_genre_id not in genre_dict:
             print("\nOngeldig invoer, vul een ID in zonder extra tekens of spaties.\n")
-
-

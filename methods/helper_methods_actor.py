@@ -4,8 +4,12 @@ from api.api_data_handling.api_data_handling_actor import formateer_geslacht_act
 
 def krijg_acteur_lijst():
     """
-    nog beschrijven v2
+    Deze functie laat de gebruiker via een acteur naam zoeken naar een acteur.
+
+    De gebruiker zal voor een acteur naam worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in een api call.
     """
+
     klaar_met_zoeken = False
     resultaten_gekregen = False, {}
 
@@ -27,7 +31,10 @@ def krijg_acteur_lijst():
 
 def krijg_acteur_details():
     """
-    NOG BESCHRIJVEN
+    Deze functie laat de gebruiker via een acteur ID de acteur details zoeken en weergeven.
+
+    De gebruiker zal voor een acteur ID worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in een api call.
     """
     klaar_met_zoeken = False
 
@@ -47,6 +54,9 @@ def krijg_acteur_details():
 def filter_acteur_geslacht(response=None):
     """
     Deze functie laat de gebruiker de beschikbare geslacht opties zien, en laat de acteur lijst hiermee filteren.
+
+    De gebruiker zal om een geslacht optie worden grevraagd, deze input wordt gecontroleerd. Indien oke, zal deze
+    gebruikt worden in formateer functie.
     """
 
     geslacht_optie_lijst = [

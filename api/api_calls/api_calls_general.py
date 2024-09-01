@@ -6,6 +6,11 @@ import api.api_data_handling.api_data_handling_general as api_data_handling_gene
 
 
 def test_api():
+    """
+    Deze functie gebruikte ik tijdens het bouwen van deze applicatie, om de API calls te testen,
+    en daarvan de response. Deze functie werd vooral in de begin fase gebruikt.
+    """
+
     #url = "https://api.themoviedb.org/3/search/movie?api_key=73848e07266dcffa72c033c48439c581"
     endpoint_url = "https://api.themoviedb.org/3/discover/movie"
 
@@ -30,8 +35,8 @@ def krijg_beschikbare_film_genres():
     """
     Deze functie zoekt en weergeeft de beschikbare genres.
 
-    Deze functie wordt aangeroepen vanuit menu.py filter_genre(). Er zal een API request
-    gemaakt worden, de response wordt geformaateerd in api_data_handling_general.formateer_genre_lijst.
+    Deze functie wordt aangeroepen vanuit filter_genre(). Er zal een API request
+    gemaakt worden, de response wordt geformaateerd in formateer_genre_lijst().
     Daara wordt de boolean resultaten gekregen geretourneerd.
 
     """

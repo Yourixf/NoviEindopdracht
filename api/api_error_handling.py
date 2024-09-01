@@ -1,10 +1,9 @@
 def controleer_status_code(response=None):
     """
-    Deze functie conttoleert de status code van de API request.
+    Deze functie controleert de status code van de API request.
 
     Deze functie ontvangt van diverse API request functies de response, en controleert
     of welke status code deze heeft en deze word met een bericht geretourneerd.
-
     """
 
     if response.status_code == None:

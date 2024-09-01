@@ -2,18 +2,21 @@ import config
 import api.api_data_handling.api_data_handling_general as api_data_handling_general
 from api.api_data_handling.api_data_handling_general import formateer_maximale_grootte
 
+
 def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
     """
     Deze functie formateert de actuer response lijst.
 
-    Deze functie wordt aangeroepen vanuit api_calls.zoek_acteur_naam() die een response meegeeft
-    die vervolgens gecontroleerd wordt op inhoud en formateerd en presenteerd aan de gebruikt.
-    Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
-
+    Deze aanroepende functie geeft een API response mee die vervolgens gecontroleerd wordt op inhoud en formateerd en
+    presenteerd aan de gebruikt. Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
     """
-    response_dict = response.json()
+    if response is not None:
+        response_dict = response.json()
 
-    if response_dict.get("total_results", 0) == 0:
+    if response is None:
+        print("Er ging wat mis... Ik heb geen data meegekregen.")
+        return False
+    elif response_dict.get("total_results", 0) == 0:
         print(f"Geen resultaten voor: {gebruiker_acteur_naam}\n")
 
         # Word geprint als logging variabele in main.py op True staat.
@@ -64,6 +67,13 @@ def formateer_acteur_lijst(response=None, gebruiker_acteur_naam=None):
 
 
 def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
+    """
+    Deze functie formateert de acteur detail response.
+
+    Deze aanroepende functie geeft een API response mee die vervolgens gecontroleerd wordt op inhoud en formateerd en
+    presenteerd aan de gebruikt. Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
+    """
+
     response_dict = response.json()
 
     film_details_volgorde_tuple = (
@@ -97,82 +107,89 @@ def formateer_acteur_details(response=None, gebruiker_acteur_id=None):
     print("-" * 50)
     print(f"Alle beschikbare informatie over: {gebruiker_acteur_id}\n")
 
-    for key in film_details_volgorde_tuple:
-        # Controleert of item in response zit
-        if key in response_dict:
-            value = response_dict[key]
-            # controlleert of de waarde een bool is
-            if isinstance(value, bool):
-                # Als waarde True is: Ja, als waarde False is: Nee.
-                value = "Ja" if value else "Nee"
-            elif isinstance(value, list):
-                # Al de respone een sub dict een key name bevat, zal deze erop itereren
-                # en de values in 1 string plaatsen
-                if all(isinstance(item, dict) and 'name' in item for item in value):
-                    value = ", ".join(item['name'] for item in value)
-                else:
-                    value = ", ".join(str(item) for item in value)
-            elif isinstance(value, (int, float)):
-                value = str(value)
-
-                if key == "gender":
-                    if value == "0":
-                        value = "Onbekend"
-                    elif value == "1":
-                        value = "Vrouw"
-                    elif value == "2":
-                        value = "Man"
-                    elif value == "3":
-                        value = "Non binair"
-            else:
-                value = value.strip() if isinstance(value, str) else value
-
-            if not value:
-                value = "ONBEKEND"
-
-            # Zorgt ervoor dat de geprinte waardes niet breder is dan 50 characters.
-            geformateerde_value = api_data_handling_general.formateer_maximale_grootte(value, max_length=50)
-
-            print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
-
-        elif key not in response_dict:
-            print("-" * 50)
-            print("Geen details gevonden.")
-
-    print("-" * 50)
-
-    if key not in response_dict:
-        # Word geprint als logging variabele in main.py op True staat.
-        if config.terminal_logging:
-            print("Logging - Geen acteur details weergegeven")
+    if response is None:
+        print("Er ging wat mis... Ik heb geen data meegekregen.")
         return False
-    elif key in response_dict:
-        # Word geprint als logging variabele in main.py op True staat.
-        if config.terminal_logging:
-            print("Logging - Acteur details weergegeven")
-        return True
+    else:
+        for key in film_details_volgorde_tuple:
+            # Controleert of item in response zit
+            if key in response_dict:
+                value = response_dict[key]
+                # controlleert of de waarde een bool is
+                if isinstance(value, bool):
+                    # Als waarde True is: Ja, als waarde False is: Nee.
+                    value = "Ja" if value else "Nee"
+                elif isinstance(value, list):
+                    # Al de respone een sub dict een key name bevat, zal deze erop itereren
+                    # en de values in 1 string plaatsen
+                    if all(isinstance(item, dict) and 'name' in item for item in value):
+                        value = ", ".join(item['name'] for item in value)
+                    else:
+                        value = ", ".join(str(item) for item in value)
+                elif isinstance(value, (int, float)):
+                    value = str(value)
+
+                    if key == "gender":
+                        if value == "0":
+                            value = "Onbekend"
+                        elif value == "1":
+                            value = "Vrouw"
+                        elif value == "2":
+                            value = "Man"
+                        elif value == "3":
+                            value = "Non binair"
+                else:
+                    value = value.strip() if isinstance(value, str) else value
+
+                if not value:
+                    value = "ONBEKEND"
+
+                # Zorgt ervoor dat de geprinte waardes niet breder is dan 50 characters.
+                geformateerde_value = api_data_handling_general.formateer_maximale_grootte(value, max_length=50)
+
+                print(f"{key_map_dict.get(key, key.capitalize())}: {geformateerde_value}")
+
+            elif key not in response_dict:
+                print("-" * 50)
+                print("Geen details gevonden.")
+
+        print("-" * 50)
+
+        if key not in response_dict:
+            # Word geprint als logging variabele in main.py op True staat.
+            if config.terminal_logging:
+                print("Logging - Geen acteur details weergegeven")
+            return False
+        elif key in response_dict:
+            # Word geprint als logging variabele in main.py op True staat.
+            if config.terminal_logging:
+                print("Logging - Acteur details weergegeven")
+            return True
+
 
 def formateer_geslacht_acteur_lijst(response=None, gebruiker_acteur_geslacht=None):
     """
     Deze functie formateert de geslacht acteur lijst.
 
-    Deze functie wordt aangeropen vanuit helper_methods_general.py filter_acteur_geslacht().
-    De functie zal over de data itereren, formateren en presenteren aan de gebruiker
-    als het gekozen geslacht in de response voorkomt. Tot slot zal deze een boleon waarde
-    retourneren aan de aanroepende functie
+    Deze aanroepende functie geeft een API response mee die vervolgens gecontroleerd wordt op inhoud en formateerd en
+    presenteerd aan de gebruikt. Als laatst zal de functie een boolean retourneren aan de aanroepende functie.
 
     """
 
-    response_dict = response.json()
+    if response is not None:
+        response_dict = response.json()
+
     resultaat_gevonden = False
 
-    if response_dict.get("total_results", 0) == 0:
-        print(f"Geen acteur(s) gevonde met jouw  gekozen geslacht\n")
+    if response is None:
+        print("Er ging wat mis... Ik heb geen data meegekregen.")
+        return False
+    elif response_dict.get("total_results", 0) == 0:
+        print(f"Geen acteur(s) gevonden met jouw gekozen geslacht\n")
 
         # Word geprint als logging variabele in main.py op True staat.
         if config.terminal_logging:
             print("Logging - Geen acteur lijst weergegeven\n")
-
         return False
     else:
         print("-" * 50)
@@ -182,7 +199,8 @@ def formateer_geslacht_acteur_lijst(response=None, gebruiker_acteur_geslacht=Non
             name = formateer_maximale_grootte(acteur.get("name", "").strip() or "ONBEKEND")
             original_name = formateer_maximale_grootte(acteur.get("original_name", "").strip() or "ONBEKEND")
             gender = formateer_maximale_grootte(str(acteur.get("gender", "")).strip() or "ONBEKEND")
-            known_for_department = formateer_maximale_grootte(acteur.get("known_for_department", "").strip() or "ONBEKEND")
+            known_for_department = formateer_maximale_grootte(
+                acteur.get("known_for_department", "").strip() or "ONBEKEND")
             popularity = formateer_maximale_grootte(str(acteur.get("popularity", "")).strip() or "ONBEKEND")
             known_for_list = formateer_maximale_grootte(acteur.get("known_for", []))
             known_for_movie = formateer_maximale_grootte(known_for_list[0].get("original_title", "ONBEKEND")
@@ -210,7 +228,7 @@ def formateer_geslacht_acteur_lijst(response=None, gebruiker_acteur_geslacht=Non
                 print("-" * 50)
 
         if resultaat_gevonden == False:
-            print(f"Geen acteur(s) met jou gekozen geslacht.\n")
+            print(f"Geen acteur(s) met jouw gekozen geslacht.\n")
         elif resultaat_gevonden == True:
             print("Acteur(s) met jouw gekozen geslacht.\n")
         # Word geprint als logging variabele in main.py op True staat.

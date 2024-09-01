@@ -8,7 +8,6 @@ from methods.helper_methods_movie import krijg_film_lijst, krijg_film_details, f
 def print_hoofdmenu():
     """
     Dit is een functie die het hoofdmenu print in de terminal
-
     """
 
     hoofd_opties_lijst = [
@@ -32,11 +31,11 @@ def print_hoofdmenu():
 
 def hoofdmenu_optie_1():
     """
-    Deze functie haalt de film titel vanuit de gebruiker op en roept de api call functie aan
+    Deze functie laat de gebruiker in de hoofdmenu optie 1 navigeren en diverse functies gebruiken.
 
-    Deze functie wordt aangeroepen vanuit start_applicatie en krijgt in deze functie een film titel die
-    geretourneerd wordt naar api_calls.zoek_film_naam. Daar wordt de response geformateerd. Vervolgens
-    Word de submenu_optie_1 aangeroepen om een vervolg actie uit te voeren.
+    Deze functie wordt aangeroepen vanuit start_applicatie. De gebruiker maakt een keuze, hierna zal de gebruiker
+    naar de betreffende functie worden gestuurd. Vervolgens wordt submenu_optie_1 aangeroepen om een vervolg actie uit
+    te voeren.
     """
     klaar_met_zoeken = False
     keuze_submenu = None
@@ -97,13 +96,11 @@ def submenu_optie_1(resulaten_gekregen=None):
 
 def hoofdmenu_optie_2():
     """
-    Deze functie haalt een acteur naam en acteur ID vanuit de gebruiker op en roept de api call functie aan en
-    retourneert de response.
+    Deze functie laat de gebruiker in de hoofdmenu optie 2 navigeren en diverse functies gebruiken.
 
-    Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
-    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een
-    api call, de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee
-    wordt de details van een acteur gelaten zien.
+    Deze functie wordt aangeroepen vanuit start_applicatie. De gebruiker maakt een keuze, hierna zal de gebruiker
+    naar de betreffende functie worden gestuurd. Vervolgens wordt submenu_optie_1 aangeroepen om een vervolg actie uit
+    te voeren.
     """
 
     klaar_met_zoeken = False
@@ -129,7 +126,7 @@ def hoofdmenu_optie_2():
 
 def submenu_optie_2(resulaten_gekregen=None):
     """
-    Deze functie laat het submenu van optie 1 zien.
+    Deze functie laat het submenu van optie 2 zien.
 
     Deze functie kijkt of de query resultaten bevat, indien wel wordt lijst versie 1 weergeven en andersom.
     """
@@ -160,14 +157,11 @@ def submenu_optie_2(resulaten_gekregen=None):
 
 def hoofdmenu_optie_3():
     """
-    Deze functie haalt een acteur naam en acteur ID vanuit de gebruiker op en roept de api call functie aan en
-    retourneert de response.
+    Deze functie laat de gebruiker in de hoofdmenu optie 3 navigeren en diverse functies gebruiken.
 
-    Deze functie wordt aangeroepen vanuit start_applicatie en loopt door deze fucntie menu heen tot dat de gebruiker
-    de stop optie geeft. Deze functie krijgt vanuit de gebruiker een acteur naam, deze maakt wordt gebruikt in een
-    api call, de response word geretourneerd en daarna geeft de gebruiker een acteur ID vanuit de response en hiermee
-    wordt een film lijst geretourneerd waar de actuer ID instaat. Hierna krijgt de gebruiker de opties om de
-    bovenstaande functies te gebruiken.
+    Deze functie wordt aangeroepen vanuit start_applicatie. De gebruiker maakt een keuze, hierna zal de gebruiker
+    naar de betreffende functie worden gestuurd. Vervolgens wordt submenu_optie_1 aangeroepen om een vervolg actie uit
+    te voeren.
     """
 
     klaar_met_zoeken = False
@@ -178,7 +172,6 @@ def hoofdmenu_optie_3():
         if resulaten_gekregen is None or keuze_submenu in ["2", "4"]:
             resulaten_gekregen, response = krijg_acteur_lijst()
 
-            # TO DO: fix loop, misch helper functie zoals bij de rest on sync te maken met de anderen functies
             if resulaten_gekregen is True:
                 krijg_film_acteur_lijst()
 
@@ -228,8 +221,8 @@ def hoofdmenu_optie_4():
     """
     Deze functie laat de gebruiker settings wijzigen in de applicatie.
 
-    Deze functie wordt aangeroepen vanuit main.py, laat de huidige settings zien,
-    en laat de gebruiker deze wijzigen.
+    Deze functie wordt aangeroepen vanuit main.py, laat de huidige settings zien, en laat de gebruiker deze wijzigen
+    via de bijbehorende helper functie.
     """
 
     def print_optie_lijst():

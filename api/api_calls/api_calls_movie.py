@@ -7,11 +7,11 @@ import api.api_data_handling.api_data_handling_movie as api_data_handling_movie
 
 def zoek_film_naam(gebruiker_film_titel=None):
     """
-    Deze functie maakt een API call en zoekt naar films
+    Deze functie maakt een API call en zoekt naar films.
 
-    Deze functie ontvangt gebruikers input vanuit menu.hoofdmenu_optie_1 en gebruikt deze
-    in de payload om te zoeken en formateerd de response in api_data_handling.formateer_film_lijst.
-    Daana zal de functie een boolean, resultaten_gekregen retourneren.
+    Deze functie ontvangt gebruikers input vanuit de aanroepende functieen gebruikt deze in de payload om te zoeken,
+    de status daarvan wordt controleerd, de data geformateerd en weergegeven en zal een boolean waarde vanuit de
+    formateer functie worden geretourneerd aan de aanroepende functie.
     """
 
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/search/movie"
@@ -46,10 +46,10 @@ def zoek_film_naam(gebruiker_film_titel=None):
 
 def zoek_film_details(gebruiker_film_ID=None):
     """
-    Deze functie maakt een API call en zoekt de details van een film
+    Deze functie maakt een API call en zoekt de details van een film.
 
     Deze functie ontvangt een film id vanuit de gebruiker die in de payload van de query word gebruikt
-    om de data terug te krijgen die vervolgens geformateerd word.
+    om de data terug te krijgen die vervolgens gecontroleerd en geformateerd word.
     """
 
     API_ENDPOINT_URL = "https://api.themoviedb.org/3/movie/"
